@@ -40,7 +40,7 @@ namespace Wms.Api.Dtos.Shipments
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
-        public decimal RemainingQty => OrderedQty - PickedQty;
+        public decimal RemainingQty => OrderedQty - PickedQty - ShippedQty;
         public bool IsCompleted => PickedQty >= OrderedQty;
 
     }

@@ -1,86 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\",
+  "WorkspaceRootPath": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\data\\wmsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:data\\wmsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\entities\\shipmentline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\entities\\shipmentline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:entities\\shipmentline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\controllers\\shipmentlinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\controllers\\shipmentlinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\shipmentlinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\shipmentlinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\dtos\\shipmentlinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\shipmentlinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\controllers\\receivingheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\receivingheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\controllers\\pickheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\pickheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\shipmentheaderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\shipmentheaderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\companydetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\companydetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\controllers\\inventorymovementcontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\inventorymovementcontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\inventorymovementdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\inventorymovementdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\inventorymovementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\inventorymovementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\pickheaderdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\pickheaderdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\pickheaderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\pickheaderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\shipmentheaderdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\shipmentheaderdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\common\\pagedresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:common\\pagedresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\common\\paginationparameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:common\\paginationparameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\wms.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:wms.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\bindetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\bindetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\handheld\\wms.api\\dtos\\bindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\bindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\dtos\\updateshipmentlinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\updateshipmentlinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -90,248 +26,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ShipmentLine.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Entities\\ShipmentLine.cs",
-              "RelativeDocumentMoniker": "Entities\\ShipmentLine.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Entities\\ShipmentLine.cs",
-              "RelativeToolTip": "Entities\\ShipmentLine.cs",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAowBMAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T04:11:21.058Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ShipmentLinesController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\ShipmentLinesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ShipmentLinesController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\ShipmentLinesController.cs",
-              "RelativeToolTip": "Controllers\\ShipmentLinesController.cs",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAowI4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T04:10:01.875Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "ShipmentLineDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\ShipmentLineDto.cs",
+              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\ShipmentLineDto.cs",
               "RelativeDocumentMoniker": "DTOs\\ShipmentLineDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\ShipmentLineDto.cs",
+              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\ShipmentLineDto.cs",
               "RelativeToolTip": "DTOs\\ShipmentLineDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAA3wCoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-14T04:07:49.666Z"
+              "WhenOpened": "2026-02-20T18:10:37.234Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "WmsDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Data\\WmsDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\WmsDbContext.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Data\\WmsDbContext.cs",
-              "RelativeToolTip": "Data\\WmsDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgCAAAMAAAAAAAAAA==",
+              "Title": "ShipmentLine.cs",
+              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\ShipmentLine.cs",
+              "RelativeDocumentMoniker": "Entities\\ShipmentLine.cs",
+              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\ShipmentLine.cs",
+              "RelativeToolTip": "Entities\\ShipmentLine.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAAAF0AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-13T13:53:20.617Z",
+              "WhenOpened": "2026-02-20T17:40:49.11Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ReceivingHeadersController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\ReceivingHeadersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ReceivingHeadersController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\ReceivingHeadersController.cs",
-              "RelativeToolTip": "Controllers\\ReceivingHeadersController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "ShipmentLinesController.cs",
+              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ShipmentLinesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ShipmentLinesController.cs",
+              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ShipmentLinesController.cs",
+              "RelativeToolTip": "Controllers\\ShipmentLinesController.cs",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAkwLcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:11:49.438Z"
+              "WhenOpened": "2026-02-20T17:38:41.231Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PickHeadersController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\PickHeadersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PickHeadersController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\PickHeadersController.cs",
-              "RelativeToolTip": "Controllers\\PickHeadersController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIwAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "UpdateShipmentLineDto.cs",
+              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\UpdateShipmentLineDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UpdateShipmentLineDto.cs",
+              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\UpdateShipmentLineDto.cs",
+              "RelativeToolTip": "DTOs\\UpdateShipmentLineDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:39:31.854Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "InventoryMovementDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\InventoryMovementDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\InventoryMovementDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\InventoryMovementDto.cs",
-              "RelativeToolTip": "DTOs\\InventoryMovementDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:41:56.172Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "InventoryMovementDetailDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\InventoryMovementDetailDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\InventoryMovementDetailDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\InventoryMovementDetailDto.cs",
-              "RelativeToolTip": "DTOs\\InventoryMovementDetailDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:42:25.445Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "PickHeaderDetailDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\PickHeaderDetailDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\PickHeaderDetailDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\PickHeaderDetailDto.cs",
-              "RelativeToolTip": "DTOs\\PickHeaderDetailDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:38:42.982Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ShipmentHeaderDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\ShipmentHeaderDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\ShipmentHeaderDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\ShipmentHeaderDto.cs",
-              "RelativeToolTip": "DTOs\\ShipmentHeaderDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:34:39.223Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "InventoryMovementControllers.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\InventoryMovementControllers.cs",
-              "RelativeDocumentMoniker": "Controllers\\InventoryMovementControllers.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\InventoryMovementControllers.cs",
-              "RelativeToolTip": "Controllers\\InventoryMovementControllers.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAwwIkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:42:38.068Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CompanyDetailDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\CompanyDetailDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\CompanyDetailDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\CompanyDetailDto.cs",
-              "RelativeToolTip": "DTOs\\CompanyDetailDto.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAA9wC8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:51:00.564Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "PickHeaderDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\PickHeaderDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\PickHeaderDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\PickHeaderDto.cs",
-              "RelativeToolTip": "DTOs\\PickHeaderDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:38:14.116Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ShipmentHeaderDetailDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\ShipmentHeaderDetailDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\ShipmentHeaderDetailDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\ShipmentHeaderDetailDto.cs",
-              "RelativeToolTip": "DTOs\\ShipmentHeaderDetailDto.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAA9wEAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:35:04.482Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "StockController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\StockController.cs",
-              "RelativeDocumentMoniker": "Controllers\\StockController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Controllers\\StockController.cs",
-              "RelativeToolTip": "Controllers\\StockController.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAgwBcAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:14:41.683Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "PagedResponse.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Common\\PagedResponse.cs",
-              "RelativeDocumentMoniker": "Common\\PagedResponse.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Common\\PagedResponse.cs",
-              "RelativeToolTip": "Common\\PagedResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:06:19.327Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "PaginationParameters.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Common\\PaginationParameters.cs",
-              "RelativeDocumentMoniker": "Common\\PaginationParameters.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Common\\PaginationParameters.cs",
-              "RelativeToolTip": "Common\\PaginationParameters.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T14:05:36.562Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Wms.Api.csproj",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Wms.Api.csproj",
-              "RelativeDocumentMoniker": "Wms.Api.csproj",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Wms.Api.csproj",
-              "RelativeToolTip": "Wms.Api.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-02-12T14:05:04.51Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "BinDetailDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\BinDetailDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\BinDetailDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\BinDetailDto.cs",
-              "RelativeToolTip": "DTOs\\BinDetailDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T13:59:45.756Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "BinDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\BinDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\BinDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\DTOs\\BinDto.cs",
-              "RelativeToolTip": "DTOs\\BinDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T13:59:23.459Z"
+              "WhenOpened": "2026-02-20T17:38:09.034Z"
             }
           ]
         }

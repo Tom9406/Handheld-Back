@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Handheld.Api.Entities;
+using Microsoft.EntityFrameworkCore;
 using Wms.Api.Entities;
 
 namespace Wms.Api.Data

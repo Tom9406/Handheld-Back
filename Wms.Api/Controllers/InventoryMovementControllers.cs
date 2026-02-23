@@ -27,6 +27,7 @@ public class InventoryMovementsController : ControllerBase
     // ======================================================
     [HttpGet]
     public async Task<IActionResult> GetInventoryMovements(
+        Guid companyId,
         int pageNumber = 1,
         int pageSize = 20,
         Guid? itemId = null,
@@ -43,7 +44,9 @@ public class InventoryMovementsController : ControllerBase
 
         var query = _db.InventoryMovements
             .AsNoTracking()
+            .Where(x => x.CompanyId == companyId)
             .AsQueryable();
+
 
         // ========================
         // Filters
@@ -109,11 +112,11 @@ public class InventoryMovementsController : ControllerBase
     // GET: api/movements/{id}
     // ======================================================
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id, Guid companyId)
     {
         var movement = await _db.InventoryMovements
             .AsNoTracking()
-            .Where(x => x.Id == id)
+            .Where(x => x.Id == id && x.CompanyId == companyId)
             .Select(x => new InventoryMovementDetailDto
             {
                 Id = x.Id,
@@ -134,4 +137,5 @@ public class InventoryMovementsController : ControllerBase
 
         return Ok(movement);
     }
+
 }

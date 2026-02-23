@@ -1,9 +1,9 @@
-﻿using System;
-using Wms.Api.Entities;
+﻿using Wms.Api.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-namespace Handheld.Domain.Entities;
+namespace Handheld.Api.Entities;
 
-public class InventoryMovement
+public class InventoryMovements
 {
     public Guid Id { get; set; }
 
@@ -44,5 +44,5 @@ public class InventoryMovement
     public Item Item { get; set; } = null!;
     public Bin Bin { get; set; } = null!;
     public Company Company { get; set; } = null!;
-    public Warehouse? Warehouse { get; set; }
+   // public Warehouse? Warehouse { get; set; }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Data;
 using Wms.Api.Dtos.Shipments;
+using Wms.Api.DTOs;
 
 namespace Wms.Api.Controllers;
 
@@ -138,5 +139,47 @@ public class ShipmentLinesController : ControllerBase
             return NotFound();
 
         return Ok(line);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateLine(Guid id, UpdateShipmentLineDto dto)
+    {
+        var line = await _db.ShipmentLines
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (line == null)
+            return NotFound();
+
+        if (dto.ShippedQty < 0)
+            return BadRequest("Invalid quantity");
+
+        // Validación: Picked + Shipped no puede superar Ordered
+        if (line.PickedQty + dto.ShippedQty > line.OrderedQty)
+            return BadRequest("Picked + Shipped cannot exceed ordered quantity");
+
+        line.ShippedQty = dto.ShippedQty;
+
+        // Recalcular estado
+        var totalProcessed = line.PickedQty + line.ShippedQty;
+
+        if (totalProcessed <= 0)
+        {
+            line.LineStatus = "Open";
+        }
+        else if (totalProcessed < line.OrderedQty)
+        {
+            line.LineStatus = "Partial";
+        }
+        else
+        {
+            line.LineStatus = "Closed";
+        }
+
+        line.UpdatedAt = DateTime.UtcNow;
+        line.UpdatedBy = "SYSTEM";
+
+        await _db.SaveChangesAsync();
+
+        return NoContent();
     }
 }

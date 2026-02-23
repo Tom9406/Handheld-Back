@@ -4444,11 +4444,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Wms.Api.csproj",
+      "projectUniqueName": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Wms.Api.csproj",
       "projectName": "Wms.Api",
-      "projectPath": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\Wms.Api.csproj",
+      "projectPath": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Wms.Api.csproj",
       "packagesPath": "C:\\Users\\Tony\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Tony\\Documents\\Handheld\\Wms.Api\\obj\\",
+      "outputPath": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
