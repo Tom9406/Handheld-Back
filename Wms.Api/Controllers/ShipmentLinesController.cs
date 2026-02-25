@@ -153,30 +153,58 @@ public class ShipmentLinesController : ControllerBase
         if (dto.ShippedQty < 0)
             return BadRequest("Invalid quantity");
 
-        // Validación: Picked + Shipped no puede superar Ordered
         if (line.PickedQty + dto.ShippedQty > line.OrderedQty)
             return BadRequest("Picked + Shipped cannot exceed ordered quantity");
 
         line.ShippedQty = dto.ShippedQty;
 
-        // Recalcular estado
         var totalProcessed = line.PickedQty + line.ShippedQty;
 
         if (totalProcessed <= 0)
         {
-            line.LineStatus = "Open";
+            line.LineStatus = "OPEN";
         }
         else if (totalProcessed < line.OrderedQty)
         {
-            line.LineStatus = "Partial";
+            line.LineStatus = "PARTIAL";
         }
         else
         {
-            line.LineStatus = "Closed";
+            line.LineStatus = "CLOSED";
         }
 
         line.UpdatedAt = DateTime.UtcNow;
         line.UpdatedBy = "SYSTEM";
+
+        // ===============================
+        // ACTUALIZAR HEADER
+        // ===============================
+
+        var header = await _db.ShipmentHeaders
+            .Include(h => h.Lines)
+            .FirstOrDefaultAsync(h => h.Id == line.ShipmentId);
+
+        if (header != null)
+        {
+            var totalProcessedHeader = header.Lines
+                .Sum(l => l.PickedQty + l.ShippedQty);
+
+            var allClosed = header.Lines
+                .All(l => (l.PickedQty + l.ShippedQty) >= l.OrderedQty);
+
+            if (totalProcessedHeader == 0)
+            {
+                header.ShipmentStatus = "OPEN";
+            }
+            else if (allClosed)
+            {
+                header.ShipmentStatus = "CLOSED";
+            }
+            else
+            {
+                header.ShipmentStatus = "SHIPPING";
+            }
+        }
 
         await _db.SaveChangesAsync();
 

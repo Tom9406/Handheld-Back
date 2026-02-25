@@ -163,4 +163,51 @@ public class ReceivingLinesController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateLine(Guid id, UpdateReceivingLineDto dto)
+    {
+        var line = await _context.ReceivingLines
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (line == null)
+            return NotFound();
+
+        if (dto.QuantityReceived < 0)
+            return BadRequest("Invalid quantity");
+
+        if (dto.QuantityReceived > line.QuantityExpected)
+            return BadRequest("Received quantity cannot exceed expected quantity");
+
+        line.QuantityReceived = dto.QuantityReceived;
+
+        var header = await _context.ReceivingHeaders
+            .Include(h => h.Lines)
+            .FirstOrDefaultAsync(h => h.Id == line.ReceivingHeaderId);
+
+        if (header != null)
+        {
+            var totalReceived = header.Lines.Sum(l => l.QuantityReceived);
+
+            var allClosed = header.Lines
+                .All(l => l.QuantityReceived >= l.QuantityExpected);
+
+            if (totalReceived == 0)
+            {
+                header.Status = "OPEN";
+            }
+            else if (allClosed)
+            {
+                header.Status = "CLOSED";
+            }
+            else
+            {
+                header.Status = "RECEIVING";
+            }
+        }
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }

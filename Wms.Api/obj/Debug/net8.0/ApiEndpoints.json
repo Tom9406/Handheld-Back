@@ -455,6 +455,27 @@
   },
   {
     "ContainingType": "Wms.Api.Controllers.ReceivingLinesController",
+    "Method": "UpdateLine",
+    "RelativePath": "api/ReceivingLines/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Wms.Api.Dtos.ReceivingLine.UpdateReceivingLineDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.ReceivingLinesController",
     "Method": "GetDetail",
     "RelativePath": "api/ReceivingLines/{id}/detail",
     "HttpMethod": "GET",

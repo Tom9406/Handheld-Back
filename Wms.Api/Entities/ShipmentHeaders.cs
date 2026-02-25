@@ -60,5 +60,7 @@ namespace Wms.Api.Entities
 
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        public ICollection<ShipmentLines> Lines { get; set; } = new List<ShipmentLines>();
     }
 }

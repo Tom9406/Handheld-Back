@@ -20,7 +20,6 @@ namespace Wms.Api.Data
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<ReceivingHeader> ReceivingHeaders => Set<ReceivingHeader>();
         public DbSet<ReceivingLine> ReceivingLines => Set<ReceivingLine>();
-
         public DbSet<ShipmentLines> ShipmentLines => Set<ShipmentLines>();
 
 
