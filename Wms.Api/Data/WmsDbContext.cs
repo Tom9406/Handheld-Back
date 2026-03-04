@@ -21,6 +21,11 @@ namespace Wms.Api.Data
         public DbSet<ReceivingHeader> ReceivingHeaders => Set<ReceivingHeader>();
         public DbSet<ReceivingLine> ReceivingLines => Set<ReceivingLine>();
         public DbSet<ShipmentLines> ShipmentLines => Set<ShipmentLines>();
+        public DbSet<PostedShipment> PostedShipments { get; set; }
+        public DbSet<PostedShipmentLine> PostedShipmentLines { get; set; }
+        public DbSet<DocumentSequence> DocumentSequences { get; set; }
+        public DbSet<PostedReceivingHeader> PostedReceivingHeaders { get; set; }
+        public DbSet<PostedReceivingLine> PostedReceivingLines { get; set; }
 
 
 
@@ -32,6 +37,12 @@ namespace Wms.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DocumentSequence>(entity =>
+            {
+                entity.ToTable("DocumentSequences", "core");
+                entity.HasKey(e => e.Id);
+            });
 
             // ===== Items =====
             modelBuilder.Entity<Item>(entity =>
@@ -616,6 +627,39 @@ namespace Wms.Api.Data
                 entity.HasIndex(e => e.CompanyId);
 
                 entity.Property(e => e.CreatedAt).IsRequired();
+            });
+
+            // ===== Posted Shipments =====
+            modelBuilder.Entity<PostedShipment>(entity =>
+            {
+                entity.ToTable("PostedShipments", "core");
+                entity.HasKey(e => e.Id);
+            });
+
+            // ===== Posted Shipment Lines =====
+            modelBuilder.Entity<PostedShipmentLine>(entity =>
+            {
+                entity.ToTable("PostedShipmentLines", "core");
+                entity.HasKey(e => e.Id);
+            });
+
+            // ===== Posted Receiving Headers =====
+            modelBuilder.Entity<PostedReceivingHeader>(entity =>
+            {
+                entity.ToTable("PostedReceivingHeaders", "core");
+                entity.HasKey(e => e.Id);
+
+                entity.HasMany(e => e.Lines)
+                      .WithOne(l => l.PostedReceivingHeader)
+                      .HasForeignKey(l => l.PostedReceivingHeaderId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ===== Posted Receiving Lines =====
+            modelBuilder.Entity<PostedReceivingLine>(entity =>
+            {
+                entity.ToTable("PostedReceivingLines", "core");
+                entity.HasKey(e => e.Id);
             });
 
 

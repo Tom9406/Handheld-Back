@@ -7,9 +7,9 @@ public class InventoryMovements
 {
     public Guid Id { get; set; }
 
-    public Guid ItemId { get; set; }
+    public Guid? ItemId { get; set; }
 
-    public Guid BinId { get; set; }
+    public Guid? BinId { get; set; }
 
     public decimal Quantity { get; set; }
 

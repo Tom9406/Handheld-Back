@@ -6,11 +6,11 @@ namespace Wms.Api.Dtos.InventoryMovement
     {
         public Guid Id { get; set; }
 
-        public Guid ItemId { get; set; }
+        public Guid? ItemId { get; set; }
         public string ItemNo { get; set; } = null!;
         public string ItemDescription { get; set; } = null!;
 
-        public Guid BinId { get; set; }
+        public Guid? BinId { get; set; }
         public string BinCode { get; set; } = null!;
 
         public decimal Quantity { get; set; }

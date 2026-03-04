@@ -173,13 +173,49 @@ public class ReceivingLinesController : ControllerBase
         if (line == null)
             return NotFound();
 
+        // ===============================
+        // VALIDACIONES
+        // ===============================
+
         if (dto.QuantityReceived < 0)
             return BadRequest("Invalid quantity");
 
-        if (dto.QuantityReceived > line.QuantityExpected)
-            return BadRequest("Received quantity cannot exceed expected quantity");
+        // Cantidad ya posteada (histórica)
+        var alreadyPostedQty = await _context.PostedReceivingLines
+            .Where(x => x.ReceivingLineId == id)
+            .SumAsync(x => (decimal?)x.QuantityReceived) ?? 0;
+
+        if (alreadyPostedQty + dto.QuantityReceived > line.QuantityExpected)
+            return BadRequest(
+                $"Received quantity cannot exceed expected quantity. Already posted: {alreadyPostedQty}");
+
+        // ===============================
+        // ACTUALIZAR LINEA
+        // ===============================
 
         line.QuantityReceived = dto.QuantityReceived;
+
+        var totalProcessed = alreadyPostedQty + line.QuantityReceived;
+
+        if (totalProcessed <= 0)
+        {
+            line.Status = "OPEN";
+        }
+        else if (totalProcessed < line.QuantityExpected)
+        {
+            line.Status = "PARTIAL";
+        }
+        else
+        {
+            line.Status = "CLOSED";
+        }
+
+        line.UpdatedAt = DateTime.UtcNow;
+        line.UpdatedBy = "SYSTEM";
+
+        // ===============================
+        // ACTUALIZAR HEADER
+        // ===============================
 
         var header = await _context.ReceivingHeaders
             .Include(h => h.Lines)
@@ -187,10 +223,22 @@ public class ReceivingLinesController : ControllerBase
 
         if (header != null)
         {
-            var totalReceived = header.Lines.Sum(l => l.QuantityReceived);
+            var totalReceived = header.Lines
+                .Sum(l =>
+                    (_context.PostedReceivingLines
+                        .Where(p => p.ReceivingLineId == l.Id)
+                        .Sum(p => (decimal?)p.QuantityReceived) ?? 0)
+                    + l.QuantityReceived
+                );
 
-            var allClosed = header.Lines
-                .All(l => l.QuantityReceived >= l.QuantityExpected);
+            var allClosed = header.Lines.All(l =>
+            {
+                var posted = _context.PostedReceivingLines
+                    .Where(p => p.ReceivingLineId == l.Id)
+                    .Sum(p => (decimal?)p.QuantityReceived) ?? 0;
+
+                return (posted + l.QuantityReceived) >= l.QuantityExpected;
+            });
 
             if (totalReceived == 0)
             {
@@ -204,6 +252,9 @@ public class ReceivingLinesController : ControllerBase
             {
                 header.Status = "RECEIVING";
             }
+
+            header.UpdatedAt = DateTime.UtcNow;
+            header.UpdatedBy = "SYSTEM";
         }
 
         await _context.SaveChangesAsync();

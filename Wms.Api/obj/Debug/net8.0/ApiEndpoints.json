@@ -418,6 +418,27 @@
     ]
   },
   {
+    "ContainingType": "Wms.Api.Controllers.ReceivingHeadersController",
+    "Method": "PostShipment",
+    "RelativePath": "api/ReceivingHeaders/{id}/post",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "companyId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Wms.Api.Controllers.ReceivingLinesController",
     "Method": "GetAll",
     "RelativePath": "api/ReceivingLines",
@@ -594,6 +615,27 @@
         "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.ShipmentHeadersController",
+    "Method": "PostShipment",
+    "RelativePath": "api/shipmentheaders/{id}/post",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "companyId",
+        "Type": "System.Guid",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
