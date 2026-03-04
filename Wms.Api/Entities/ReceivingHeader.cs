@@ -39,6 +39,10 @@ namespace Wms.Api.Entities
         [MaxLength(50)]
         public string? PostedBy { get; set; }
 
+        public DateTime? UpdatedAt { get; set; }
+
+        public string? UpdatedBy { get; set; }
+
         // ===== Relaciones =====
         public ICollection<ReceivingLine> Lines { get; set; } = new List<ReceivingLine>();
     }

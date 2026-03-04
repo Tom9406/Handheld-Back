@@ -27,5 +27,11 @@ namespace Wms.Api.Entities
         public Company Company { get; set; } = null!;
         public Item Item { get; set; } = null!;
         public Bin? Bin { get; set; }
+
+        public string Status { get; set; } = "OPEN";
+
+        public DateTime? UpdatedAt { get; set; }
+
+        public string? UpdatedBy { get; set; }
     }
 }

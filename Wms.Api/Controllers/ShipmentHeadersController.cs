@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Handheld.Api.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Data;
 using Wms.Api.Dtos.ShipmentHeader;
+using Wms.Api.Entities;
 
 namespace Wms.Api.Controllers;
 
@@ -175,4 +177,217 @@ public class ShipmentHeadersController : ControllerBase
 
         return Ok(shipment);
     }
+
+    // ======================================================
+    // POST: api/shipments/{id}/post
+    // ======================================================
+    [HttpPost("{id:guid}/post")]
+    public async Task<IActionResult> PostShipment(Guid id, Guid companyId)
+    {
+        using var transaction = await _db.Database.BeginTransactionAsync();
+
+        try
+        {
+            var shipment = await _db.ShipmentHeaders
+                .Include(x => x.Lines)
+                .FirstOrDefaultAsync(x =>
+                    x.Id == id &&
+                    x.CompanyId == companyId);
+
+            if (shipment == null)
+                return NotFound("Shipment not found.");
+
+            if (shipment.Lines == null || !shipment.Lines.Any())
+                return BadRequest("Shipment has no lines.");
+
+            int lineNo = 1;
+            int processedLines = 0;
+            decimal totalQtyPostedNow = 0;
+
+            // =========================================
+            // Generar consecutivo PostedShipmentNo
+            // =========================================
+            var sequence = await _db.DocumentSequences
+                .FirstOrDefaultAsync(x =>
+                    x.CompanyId == companyId &&
+                    x.DocumentType == "POSTED_SHIPMENT");
+
+            if (sequence == null)
+            {
+                sequence = new DocumentSequence
+                {
+                    Id = Guid.NewGuid(),
+                    CompanyId = companyId,
+                    DocumentType = "POSTED_SHIPMENT",
+                    LastNumber = 0
+                };
+
+                _db.DocumentSequences.Add(sequence);
+            }
+
+            sequence.LastNumber++;
+            var postedShipmentNo = $"PS-{sequence.LastNumber:D6}";
+
+            // =========================================
+            // Crear header SOLO si hay algo que postear
+            // =========================================
+            var postedShipment = new PostedShipment
+            {
+                Id = Guid.NewGuid(),
+                PostedShipmentNo = postedShipmentNo,
+                ShipmentId = shipment.Id,
+                CompanyId = shipment.CompanyId,
+                CompanyCode = shipment.CompanyCode,
+                ShipmentNo = shipment.ShipmentNo,
+                ShipmentType = shipment.ShipmentType,
+                ShipmentStatus = "POSTED",
+                WarehouseId = shipment.WarehouseId,
+                WarehouseCode = shipment.WarehouseCode,
+                CustomerId = shipment.CustomerId,
+                CustomerCode = shipment.CustomerCode,
+                CustomerName = shipment.CustomerName,
+                OrderDate = shipment.OrderDate,
+                PostedAt = DateTime.UtcNow,
+                PostedBy = "SYSTEM",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _db.PostedShipments.Add(postedShipment);
+
+            foreach (var line in shipment.Lines)
+            {
+                if (line.ShippedQty <= 0)
+                    continue;
+
+                //  Calcular cuánto ya fue posteado antes
+                var alreadyPostedQty = await _db.PostedShipmentLines
+                    .Where(x => x.ShipmentLineId == line.Id)
+                    .SumAsync(x => (decimal?)x.ShippedQty) ?? 0;
+
+                var remainingQty = line.OrderedQty - alreadyPostedQty;
+
+                if (remainingQty <= 0)
+                    continue;
+
+                if (line.ShippedQty > remainingQty)
+                    return BadRequest($"Cannot ship more than remaining quantity for item {line.ItemNo}.");
+
+                if (line.BinId == null)
+                    return BadRequest($"Shipment line for item {line.ItemNo} has no Bin assigned.");
+
+                var stockQty = await _db.InventoryMovements
+                    .Where(x =>
+                        x.CompanyId == companyId &&
+                        x.ItemId == line.ItemId &&
+                        x.BinId == line.BinId)
+                    .SumAsync(x => (decimal?)x.Quantity) ?? 0;
+
+                if (stockQty < line.ShippedQty)
+                    return BadRequest(
+                        $"Insufficient stock for item {line.ItemNo} in bin {line.BinCode}.");
+
+                // ===============================
+                // Inventory Movement
+                // ===============================
+                var movement = new InventoryMovements
+                {
+                    Id = Guid.NewGuid(),
+                    CompanyId = companyId,
+                    ItemId = line.ItemId,
+                    BinId = line.BinId.Value,
+                    Quantity = -line.ShippedQty,
+                    MovementType = "OUT",
+                    ReferenceNo = postedShipmentNo,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                _db.InventoryMovements.Add(movement);
+
+                // ===============================
+                // Posted Shipment Line
+                // ===============================
+                var postedLine = new PostedShipmentLine
+                {
+                    Id = Guid.NewGuid(),
+                    PostedShipmentId = postedShipment.Id,
+                    ShipmentLineId = line.Id,
+                    LineNo = lineNo++,
+                    ItemId = line.ItemId,
+                    ItemNo = line.ItemNo,
+                    ItemDescription = line.ItemDescription,
+                    WarehouseId = shipment.WarehouseId,
+                    BinId = line.BinId,
+                    BinCode = line.BinCode,
+                    OrderedQty = line.OrderedQty,
+                    PickedQty = line.PickedQty,
+                    ShippedQty = line.ShippedQty,
+                    UnitOfMeasure = line.UnitOfMeasure,
+                    UnitWeight = line.UnitWeight,
+                    UnitVolume = line.UnitVolume,
+                    CompanyId = companyId,
+                    LineStatus = "POSTED",
+                    PostedAt = DateTime.UtcNow,
+                    PostedBy = "SYSTEM"
+                };
+
+                _db.PostedShipmentLines.Add(postedLine);
+
+                totalQtyPostedNow += line.ShippedQty;
+                processedLines++;
+                
+
+                // ===============================
+                // Actualizar estado línea original
+                // ===============================
+                var newPostedTotal = alreadyPostedQty + line.ShippedQty;
+
+                if (newPostedTotal >= line.OrderedQty)
+                    line.LineStatus = "POSTED";
+                else
+                    line.LineStatus = "PARTIALLY POSTED";
+
+                line.ShippedQty = 0;
+                line.UpdatedAt = DateTime.UtcNow;
+            }
+
+            if (processedLines == 0)
+                return BadRequest("Nothing to post.");
+
+            // ===============================
+            // Actualizar header original
+            // ===============================
+            var allLinesFullyPosted = shipment.Lines.All(l =>
+                (_db.PostedShipmentLines
+                    .Where(x => x.ShipmentLineId == l.Id)
+                    .Sum(x => (decimal?)x.ShippedQty) ?? 0) >= l.OrderedQty);
+
+            shipment.ShipmentStatus = allLinesFullyPosted
+                ? "POSTED"
+                : "PARTIALLY POSTED";
+
+            shipment.UpdatedAt = DateTime.UtcNow;
+
+            postedShipment.TotalLines = processedLines;
+            postedShipment.TotalQty = totalQtyPostedNow;
+
+            await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return Ok(new
+            {
+                message = "Shipment posted successfully.",
+                shipmentId = shipment.Id,
+                shipmentNo = shipment.ShipmentNo,
+                postedShipmentNo = postedShipmentNo,
+                status = shipment.ShipmentStatus
+            });
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+
 }

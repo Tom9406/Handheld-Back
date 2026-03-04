@@ -25,12 +25,7 @@ public class ShipmentLinesController : ControllerBase
     //      &pageNumber=1&pageSize=50
     // ======================================================
     [HttpGet]
-    public async Task<IActionResult> GetShipmentLines(
-        Guid shipmentId,
-        Guid? companyId = null,
-        string? status = null,
-        int pageNumber = 1,
-        int pageSize = 50)
+    public async Task<IActionResult> GetShipmentLines( Guid shipmentId,Guid? companyId = null, string? status = null, int pageNumber = 1, int pageSize = 50)
     {
         if (pageNumber <= 0) pageNumber = 1;
         if (pageSize <= 0) pageSize = 50;
@@ -73,6 +68,7 @@ public class ShipmentLinesController : ControllerBase
                 OrderedQty = x.OrderedQty,
                 PickedQty = x.PickedQty,
                 ShippedQty = x.ShippedQty,
+                AlreadyPostedQty = _db.PostedShipmentLines.Where(p => p.ShipmentLineId == x.Id).Sum(p => (decimal?)p.ShippedQty) ?? 0,
                 UnitOfMeasure = x.UnitOfMeasure,
                 BaseUomQty = x.BaseUomQty,
                 LotNo = x.LotNo,
@@ -122,6 +118,7 @@ public class ShipmentLinesController : ControllerBase
                 OrderedQty = x.OrderedQty,
                 PickedQty = x.PickedQty,
                 ShippedQty = x.ShippedQty,
+                AlreadyPostedQty = _db.PostedShipmentLines.Where(p => p.ShipmentLineId == x.Id).Sum(p => (decimal?)p.ShippedQty) ?? 0,
                 UnitOfMeasure = x.UnitOfMeasure,
                 BaseUomQty = x.BaseUomQty,
                 LotNo = x.LotNo,
@@ -144,6 +141,10 @@ public class ShipmentLinesController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateLine(Guid id, UpdateShipmentLineDto dto)
     {
+        var alreadyPostedQty = await _db.PostedShipmentLines
+            .Where(x => x.ShipmentLineId == id)
+            .SumAsync(x => (decimal?)x.ShippedQty) ?? 0;
+
         var line = await _db.ShipmentLines
             .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -153,8 +154,9 @@ public class ShipmentLinesController : ControllerBase
         if (dto.ShippedQty < 0)
             return BadRequest("Invalid quantity");
 
-        if (line.PickedQty + dto.ShippedQty > line.OrderedQty)
-            return BadRequest("Picked + Shipped cannot exceed ordered quantity");
+        if (alreadyPostedQty + line.PickedQty + dto.ShippedQty > line.OrderedQty)
+            return BadRequest(
+    $"Shipped cannot exceed ordered quantity. Posted qty is: {alreadyPostedQty}");
 
         line.ShippedQty = dto.ShippedQty;
 
