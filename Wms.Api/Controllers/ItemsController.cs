@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Handheld.Api.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Xml;
 using Wms.Api.Common;
 using Wms.Api.Data;
 using Wms.Api.Dtos.Item;
+using Wms.Api.DTOs;
+using Wms.Api.Entities;
 
 namespace Wms.Api.Controllers;
 
@@ -129,4 +133,96 @@ public class ItemsController : ControllerBase
 
         return Ok(item);
     }
+
+    [HttpPost("create_item")]
+    public async Task<IActionResult> CreateItem(
+    [FromBody] CreateItemDto dto,
+    [FromQuery] Guid companyId)
+    {
+        using var transaction = await _db.Database.BeginTransactionAsync();
+
+        try
+        {
+            // ==============================
+            // Obtener o crear secuencia
+            // ==============================
+            var sequence = await _db.DocumentSequences
+                .FirstOrDefaultAsync(x =>
+                    x.CompanyId == companyId &&
+                    x.DocumentType == "ITEM_CREATED");
+
+            if (sequence == null)
+            {
+                sequence = new DocumentSequence
+                {
+                    Id = Guid.NewGuid(),
+                    CompanyId = companyId,
+                    DocumentType = "ITEM_CREATED",
+                    LastNumber = 0
+                };
+
+                _db.DocumentSequences.Add(sequence);
+            }
+
+            sequence.LastNumber++;
+
+            var itemNo = $"ITM-{sequence.LastNumber:D6}";
+
+            // ==============================
+            // Crear entidad Item
+            // ==============================
+            var item = new Item
+            {
+                Id = Guid.NewGuid(),
+                ItemNo = itemNo,
+                Description = dto.Description,
+                UOM = dto.UOM,
+                ItemType = dto.ItemType,
+                Barcode = dto.Barcode,
+                AltBarcode = dto.AltBarcode,
+
+                IsLotTracked = dto.IsLotTracked,
+                IsSerialTracked = dto.IsSerialTracked,
+                IsExpirationTracked = dto.IsExpirationTracked,
+
+                UnitWeight = dto.UnitWeight,
+                UnitVolume = dto.UnitVolume,
+
+                BaseUOM = dto.BaseUOM,
+                SalesUOM = dto.SalesUOM,
+                PurchaseUOM = dto.PurchaseUOM,
+
+                CategoryCode = dto.CategoryCode,
+                Brand = dto.Brand,
+
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow,
+                CreatedBy = "SYSTEM",
+                CompanyId = companyId,
+
+                Part_No = dto.Part_No,
+                Alternative_Code = dto.Alternative_Code
+            };
+
+
+            _db.Items.Add(item);
+
+            await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            return Ok(new
+            {
+                message = "Item created successfully",
+                item.Id,
+                item.ItemNo
+            });
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            return StatusCode(500, ex.Message);
+        }
+    }
+
+
 }

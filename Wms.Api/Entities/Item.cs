@@ -15,6 +15,8 @@ namespace Wms.Api.Entities
         public bool IsActive { get; set; }
 
         public string ItemType { get; set; } = null!;
+        public string Part_No { get; set; } 
+        public string Alternative_Code { get; set; }
 
         public string? Barcode { get; set; }
 

@@ -212,6 +212,27 @@
     ]
   },
   {
+    "ContainingType": "Wms.Api.Controllers.ItemsController",
+    "Method": "CreateItem",
+    "RelativePath": "api/items/create_item",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Wms.Api.DTOs.CreateItemDto",
+        "IsRequired": true
+      },
+      {
+        "Name": "companyId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Wms.Api.Controllers.InventoryMovementsController",
     "Method": "GetInventoryMovements",
     "RelativePath": "api/movements",
