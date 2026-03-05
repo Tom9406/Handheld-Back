@@ -23,5 +23,7 @@
         public string? ABCClass { get; set; }
 
         public Guid CompanyId { get; set; }
+
+        public DateTime CreateAt { get; set; }
     }
 }

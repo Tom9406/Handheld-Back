@@ -457,6 +457,47 @@
         }
       }
     },
+    "/api/items/create_item": {
+      "post": {
+        "tags": [
+          "Items"
+        ],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/pickheaders": {
       "get": {
         "tags": [
@@ -1387,6 +1428,79 @@
         },
         "additionalProperties": false
       },
+      "CreateItemDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "uom": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemType": {
+            "type": "string",
+            "nullable": true
+          },
+          "barcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "altBarcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "part_No": {
+            "type": "string",
+            "nullable": true
+          },
+          "alternative_Code": {
+            "type": "string",
+            "nullable": true
+          },
+          "isLotTracked": {
+            "type": "boolean"
+          },
+          "isSerialTracked": {
+            "type": "boolean"
+          },
+          "isExpirationTracked": {
+            "type": "boolean"
+          },
+          "unitWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "unitVolume": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "baseUOM": {
+            "type": "string",
+            "nullable": true
+          },
+          "salesUOM": {
+            "type": "string",
+            "nullable": true
+          },
+          "purchaseUOM": {
+            "type": "string",
+            "nullable": true
+          },
+          "categoryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "brand": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ItemDetailDto": {
         "type": "object",
         "properties": {
@@ -1561,6 +1675,10 @@
           "companyId": {
             "type": "string",
             "format": "uuid"
+          },
+          "createAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
