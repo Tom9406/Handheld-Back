@@ -12,6 +12,10 @@
         public string? SalesUOM { get; set; }
         public string? PurchaseUOM { get; set; }
 
+        public string? Part_No { get; set; }
+
+        public string? Alternative_Code { get; set; }
+
         public decimal? ConversionFactor { get; set; }
 
         public bool IsActive { get; set; }

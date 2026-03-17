@@ -26,6 +26,8 @@ namespace Wms.Api.Data
         public DbSet<DocumentSequence> DocumentSequences { get; set; }
         public DbSet<PostedReceivingHeader> PostedReceivingHeaders { get; set; }
         public DbSet<PostedReceivingLine> PostedReceivingLines { get; set; }
+        public DbSet<ItemImage> ItemImages { get; set; }
+
 
 
 
@@ -662,7 +664,30 @@ namespace Wms.Api.Data
                 entity.HasKey(e => e.Id);
             });
 
+            modelBuilder.Entity<ItemImage>(entity =>
+            {
+                entity.ToTable("ItemImages", "core");
 
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.FileName)
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(e => e.Url)
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(e => e.IsPrimary)
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired();
+
+                entity.HasOne(e => e.Item)
+      .WithMany(i => i.Images)
+      .HasForeignKey(e => e.ItemId);
+            });
 
         }
     }

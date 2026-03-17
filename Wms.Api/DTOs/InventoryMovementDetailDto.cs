@@ -19,6 +19,8 @@ namespace Wms.Api.Dtos.InventoryMovement
 
         public string? ReferenceNo { get; set; }
 
+       
+
         public DateTime CreatedAt { get; set; }
     }
 }

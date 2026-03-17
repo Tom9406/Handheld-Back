@@ -64,5 +64,7 @@ namespace Wms.Api.Entities
 
         // Navegación
         public Company Company { get; set; } = null!;
+
+        public ICollection<ItemImage> Images { get; set; }
     }
 }

@@ -291,3 +291,12 @@ C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\obj\Debug\net8.0\refint
 C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\obj\Debug\net8.0\Wms.Api.pdb
 C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\obj\Debug\net8.0\Wms.Api.genruntimeconfig.cache
 C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\obj\Debug\net8.0\ref\Wms.Api.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\ClosedXML.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\ClosedXML.Parser.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\ExcelNumberFormat.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\RBush.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\SixLabors.Fonts.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\System.IO.Packaging.dll
+C:\Users\Tony\Documents\GitKtraken\Handheld-Back\Wms.Api\bin\Debug\net8.0\Wms.Api.staticwebassets.runtime.json

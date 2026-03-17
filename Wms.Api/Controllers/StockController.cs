@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.InkML;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Common;
 using Wms.Api.Data;
@@ -62,18 +63,29 @@ public class StockController : ControllerBase
     // ====================================================
     [HttpGet("enriched")]
     public async Task<ActionResult<PagedResponse<StockEnrichedDto>>> GetEnriched(
-        [FromQuery] Guid? companyId,
-        [FromQuery] PaginationParameters? pagination = null)
+    [FromQuery] Guid? companyId,
+    
+    [FromQuery] string? search,
+    [FromQuery] PaginationParameters? pagination = null
+    //[FromQuery] bool ItemIsActive = true
+        )
     {
         pagination ??= new PaginationParameters();
 
         var query =
-            from s in _context.CurrentStock.AsNoTracking()
-            join i in _context.Items.AsNoTracking() on s.ItemId equals i.Id
-            join b in _context.Bins.AsNoTracking() on s.BinId equals b.Id
-            where !companyId.HasValue || i.CompanyId == companyId
-            select new StockEnrichedDto
-            {
+    from s in _context.CurrentStock.AsNoTracking()
+    join i in _context.Items.AsNoTracking() on s.ItemId equals i.Id
+    join b in _context.Bins.AsNoTracking() on s.BinId equals b.Id
+    where (!companyId.HasValue || i.CompanyId == companyId)
+
+   // && (!ItemIsActive || i.IsActive)
+    && (string.IsNullOrEmpty(search)
+        || i.ItemNo.Contains(search)
+        || i.Description.Contains(search)
+        || b.BinCode.Contains(search))
+
+    select new StockEnrichedDto
+    {
                 CompanyId = i.CompanyId,
 
                 ItemId = i.Id,
@@ -82,7 +94,7 @@ public class StockController : ControllerBase
                 ItemUOM = i.UOM,
                 ItemType = i.ItemType,
                 ItemIsActive = i.IsActive,
-
+                ItemCategoryCode = i.CategoryCode,
                 IsLotTracked = i.IsLotTracked,
                 IsSerialTracked = i.IsSerialTracked,
                 IsExpirationTracked = i.IsExpirationTracked,
@@ -100,8 +112,14 @@ public class StockController : ControllerBase
                 AllowPicking = b.AllowPicking,
                 AllowPutaway = b.AllowPutaway,
 
-                StockQty = s.StockQty
-            };
+                StockQty = s.StockQty,
+
+
+                ImageUrl = _context.ItemImages
+                .Where(img => img.ItemId == i.Id )
+                .Select(img => img.Url)
+                .FirstOrDefault()
+    };
 
         var totalRecords = await query.CountAsync();
 

@@ -1,4 +1,6 @@
-﻿namespace Wms.Api.Dtos.Item
+﻿using Wms.Api.DTOs;
+
+namespace Wms.Api.Dtos.Item
 {
     public class ItemDto
     {
@@ -25,5 +27,6 @@
         public Guid CompanyId { get; set; }
 
         public DateTime CreateAt { get; set; }
+        public List<ItemImageDto> Images { get; set; }
     }
 }

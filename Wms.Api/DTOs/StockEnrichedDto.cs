@@ -13,6 +13,9 @@
         public string ItemType { get; set; } = string.Empty;
 
         public bool ItemIsActive { get; set; }
+        public string? ItemCategoryCode { get; set; }
+
+        public string? ImageUrl { get; set; }
 
         public bool IsLotTracked { get; set; }
         public bool IsSerialTracked { get; set; }
