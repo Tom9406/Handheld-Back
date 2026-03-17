@@ -1932,6 +1932,13 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemImageDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2578,6 +2585,13 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemImageDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

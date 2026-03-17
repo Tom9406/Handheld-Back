@@ -152,7 +152,14 @@ public class ItemsController : ControllerBase
                 UpdatedAt = i.UpdatedAt,
 
                 Part_No = i.Part_No,
-                Alternative_Code = i.Alternative_Code
+                Alternative_Code = i.Alternative_Code,
+                Images = i.Images.Select(img => new ItemImageDto
+                {
+                    Id = img.Id,
+                    Url = img.Url,
+                    IsPrimary = img.IsPrimary
+                }).ToList()
+
             })
             .FirstOrDefaultAsync();
 
@@ -417,6 +424,28 @@ public class ItemsController : ControllerBase
 
         item.UpdatedAt = DateTime.UtcNow;
         item.UpdatedBy = "SYSTEM";
+
+        // ==========================
+        // IMAGES
+        // ==========================
+
+        if (dto.Images != null)
+        {
+            // Eliminar imágenes actuales
+            var existingImages = _db.ItemImages.Where(x => x.ItemId == item.Id);
+            _db.ItemImages.RemoveRange(existingImages);
+
+            // Agregar nuevas
+            var newImages = dto.Images.Select(img => new ItemImage
+            {
+                Id = Guid.NewGuid(),
+                ItemId = item.Id,
+                Url = img.Url,
+                IsPrimary = img.IsPrimary
+            }).ToList();
+
+            await _db.ItemImages.AddRangeAsync(newImages);
+        }
 
         await _db.SaveChangesAsync();
 

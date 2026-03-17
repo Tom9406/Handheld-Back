@@ -1,4 +1,6 @@
-﻿namespace Wms.Api.Dtos.Item
+﻿using Wms.Api.DTOs;
+
+namespace Wms.Api.Dtos.Item
 {
     public class ItemDetailDto
     {
@@ -47,5 +49,7 @@
 
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        public List<ItemImageDto> Images { get; set; }
     }
 }
