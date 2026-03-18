@@ -153,18 +153,73 @@ public class ItemsController : ControllerBase
 
                 Part_No = i.Part_No,
                 Alternative_Code = i.Alternative_Code,
+
                 Images = i.Images.Select(img => new ItemImageDto
                 {
                     Id = img.Id,
                     Url = img.Url,
                     IsPrimary = img.IsPrimary
                 }).ToList()
-
             })
             .FirstOrDefaultAsync();
 
         if (item == null)
             return NotFound();
+
+        // =======================
+        //  INVENTORY CALCULATION
+        // =======================
+
+        // ON HAND (desde CurrentStock)
+        var qtyOnHand = await _db.CurrentStock
+            .Where(s => s.ItemId == id)
+            .SumAsync(s => (decimal?)s.StockQty) ?? 0;
+
+        // RECEIVING
+        var receiving = await _db.ReceivingLines
+            .Where(r => r.ItemId == id)
+            .GroupBy(r => r.ItemId)
+            .Select(g => new
+            {
+                Expected = g.Sum(x => x.QuantityExpected),
+                Received = g.Sum(x => x.QuantityReceived)
+            })
+            .FirstOrDefaultAsync();
+
+        // SHIPMENT
+        var shipment = await _db.ShipmentLines
+            .Where(s => s.ItemId == id)
+            .GroupBy(s => s.ItemId)
+            .Select(g => new
+            {
+                Ordered = g.Sum(x => x.OrderedQty),
+                Shipped = g.Sum(x => x.ShippedQty)
+            })
+            .FirstOrDefaultAsync();
+
+        var qtyOnPurchOrder = receiving != null
+            ? receiving.Expected - receiving.Received
+            : 0;
+
+        var qtyOnSalesOrder = shipment != null
+            ? shipment.Ordered - shipment.Shipped
+            : 0;
+
+        // =======================
+        // 🔹 SET VALUES
+        // =======================
+
+        item.QuantityOnHand = qtyOnHand;
+        item.QtyOnPurchOrder = qtyOnPurchOrder;
+        item.QtyOnSalesOrder = qtyOnSalesOrder;
+        item.QtyAvailable = qtyOnHand - qtyOnSalesOrder;
+
+        item.StockoutWarning = qtyOnHand <= 0;
+
+        // (opcionales ya default en 0)
+        item.QtyOnComponentLines = 0;
+        item.QtyOnProdOrder = 0;
+        item.ProjectedKits = 0;
 
         return Ok(item);
     }
@@ -459,14 +514,16 @@ public class ItemsController : ControllerBase
 
 
     [HttpPost("create_item")]
-    public async Task<IActionResult> CreateItem([FromBody] CreateItemDto dto,[FromQuery] Guid companyId)
+    public async Task<IActionResult> CreateItem(
+    [FromBody] CreateItemDto dto,
+    [FromQuery] Guid companyId)
     {
         using var transaction = await _db.Database.BeginTransactionAsync();
 
         try
         {
             // ==============================
-            // Obtener o crear secuencia
+            // SECUENCIA
             // ==============================
             var sequence = await _db.DocumentSequences
                 .Where(x => x.CompanyId == companyId &&
@@ -485,9 +542,7 @@ public class ItemsController : ControllerBase
                 int lastNumber = 0;
 
                 if (!string.IsNullOrEmpty(lastItemNumber))
-                {
                     lastNumber = int.Parse(lastItemNumber.Replace("ITM-", ""));
-                }
 
                 sequence = new DocumentSequence
                 {
@@ -501,11 +556,10 @@ public class ItemsController : ControllerBase
             }
 
             sequence.LastNumber++;
-
             var itemNo = $"ITM-{sequence.LastNumber:D6}";
 
             // ==============================
-            // Crear entidad Item
+            // ITEM
             // ==============================
             var item = new Item
             {
@@ -531,18 +585,43 @@ public class ItemsController : ControllerBase
                 CategoryCode = dto.CategoryCode,
                 Brand = dto.Brand,
 
+                Part_No = dto.Part_No,
+                Alternative_Code = dto.Alternative_Code,
+
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow,
                 CreatedBy = "SYSTEM",
-                CompanyId = companyId,
-
-                Part_No = dto.Part_No,
-                Alternative_Code = dto.Alternative_Code
+                CompanyId = companyId
             };
-
 
             _db.Items.Add(item);
 
+            // ==============================
+            // IMÁGENES (desde DTO)
+            // ==============================
+            if (dto.Images != null && dto.Images.Any())
+            {
+                bool isFirst = true;
+
+                foreach (var img in dto.Images)
+                {
+                    var image = new ItemImage
+                    {
+                        Id = Guid.NewGuid(),
+                        ItemId = item.Id,
+                        Url = img.Url,
+                        IsPrimary = isFirst, // primera imagen = primaria
+                        CreatedAt = DateTime.UtcNow
+                    };
+
+                    _db.ItemImages.Add(image);
+                    isFirst = false;
+                }
+            }
+
+            // ==============================
+            // SAVE
+            // ==============================
             await _db.SaveChangesAsync();
             await transaction.CommitAsync();
 

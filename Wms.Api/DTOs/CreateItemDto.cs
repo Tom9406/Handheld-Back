@@ -23,5 +23,7 @@
 
         public string? CategoryCode { get; set; }
         public string? Brand { get; set; }
+
+        public List<ItemImageDto> Images { get; set; }
     }
 }

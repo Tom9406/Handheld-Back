@@ -1,3 +1,41 @@
+# =========================
+# .NET
+# =========================
 bin/
 obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
 .vs/
+
+# Rider
+.idea/
+
+# Logs
+*.log
+
+# =========================
+# Angular / Node
+# =========================
+node_modules/
+dist/
+.angular/
+.tmp/
+
+# Env files
+.env
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Uploads (IMPORTANTE)
+# =========================
+wwwroot/images/items/*
+!wwwroot/images/items/.gitkeep

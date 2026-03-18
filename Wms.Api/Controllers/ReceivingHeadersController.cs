@@ -109,7 +109,12 @@ public class ReceivingHeadersController : ControllerBase
                     ItemId = l.ItemId,
                     BinId = l.BinId,
                     QuantityExpected = l.QuantityExpected,
-                    QuantityReceived = l.QuantityReceived
+                    QuantityReceived = l.QuantityReceived,
+
+                    // NUEVO CAMPO: suma de lo posteado
+                    PostedQuantityReceived = _context.PostedReceivingLines
+                    .Where(x => x.ReceivingLineId == l.Id)
+                    .Sum(x => (decimal?)x.QuantityReceived) ?? 0
                 }).ToList()
             })
             .FirstOrDefaultAsync();

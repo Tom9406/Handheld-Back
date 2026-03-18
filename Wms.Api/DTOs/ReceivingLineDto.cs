@@ -19,5 +19,7 @@
         public string UOM { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }
+
+        public decimal PostedQuantityReceived { get; set; }
     }
 }

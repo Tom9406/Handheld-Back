@@ -117,8 +117,8 @@ public class ReceivingLinesController : ControllerBase
     // ====================================================
     [HttpGet("by-header/{headerId}")]
     public async Task<ActionResult<PagedResponse<ReceivingLineDto>>> GetByHeader(
-        Guid headerId,
-        [FromQuery] PaginationParameters? pagination = null)
+    Guid headerId,
+    [FromQuery] PaginationParameters? pagination = null)
     {
         pagination ??= new PaginationParameters();
 
@@ -146,6 +146,11 @@ public class ReceivingLinesController : ControllerBase
 
                 QuantityExpected = l.QuantityExpected,
                 QuantityReceived = l.QuantityReceived,
+
+                
+                PostedQuantityReceived = _context.PostedReceivingLines
+                    .Where(x => x.ReceivingLineId == l.Id)
+                    .Sum(x => (decimal?)x.QuantityReceived) ?? 0,
 
                 UOM = l.UOM,
                 CreatedAt = l.CreatedAt

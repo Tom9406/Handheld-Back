@@ -37,5 +37,7 @@
 
         // ===== Stock =====
         public decimal StockQty { get; set; }
+
+       
     }
 }

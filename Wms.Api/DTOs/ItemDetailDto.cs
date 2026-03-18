@@ -50,6 +50,20 @@ namespace Wms.Api.Dtos.Item
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
+        // =======================
+        // INVENTORY
+        // =======================
+        public decimal QuantityOnHand { get; set; }
+        public decimal QtyOnPurchOrder { get; set; }
+        public decimal QtyOnSalesOrder { get; set; }
+        public decimal QtyAvailable { get; set; }
+
+        public decimal QtyOnComponentLines { get; set; } = 0;
+        public decimal QtyOnProdOrder { get; set; } = 0;
+        public decimal ProjectedKits { get; set; } = 0;
+
+        public bool StockoutWarning { get; set; }
+
         public List<ItemImageDto> Images { get; set; }
     }
 }
