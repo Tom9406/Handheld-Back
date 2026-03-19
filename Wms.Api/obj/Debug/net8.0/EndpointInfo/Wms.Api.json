@@ -885,6 +885,310 @@
         }
       }
     },
+    "/api/posted-receiving-headers": {
+      "get": {
+        "tags": [
+          "PostedReceivingHeaders"
+        ],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingHeaderDtoPagedResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingHeaderDtoPagedResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingHeaderDtoPagedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posted-receiving-headers/{id}": {
+      "get": {
+        "tags": [
+          "PostedReceivingHeaders"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingHeaderDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingHeaderDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingHeaderDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posted-receiving-headers/by-receiving/{receivingHeaderId}": {
+      "get": {
+        "tags": [
+          "PostedReceivingHeaders"
+        ],
+        "parameters": [
+          {
+            "name": "receivingHeaderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostedReceivingHeaderDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostedReceivingHeaderDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostedReceivingHeaderDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posted-receiving-lines": {
+      "get": {
+        "tags": [
+          "PostedReceivingLines"
+        ],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingLineDtoPagedResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingLineDtoPagedResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingLineDtoPagedResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posted-receiving-lines/{id}": {
+      "get": {
+        "tags": [
+          "PostedReceivingLines"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingLineDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingLineDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostedReceivingLineDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/posted-receiving-lines/by-header/{postedHeaderId}": {
+      "get": {
+        "tags": [
+          "PostedReceivingLines"
+        ],
+        "parameters": [
+          {
+            "name": "postedHeaderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "companyId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostedReceivingLineDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostedReceivingLineDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PostedReceivingLineDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/ReceivingHeaders": {
       "get": {
         "tags": [
@@ -2095,6 +2399,233 @@
           },
           "isPrimary": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PostedReceivingHeaderDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "postedReceivingNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "receivingHeaderId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "companyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "receiptNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalDocumentNo": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendorId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "vendorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "receiptDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "totalLines": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalQty": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalWeight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "totalVolume": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "sourceSystem": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceEndpoint": {
+            "type": "string",
+            "nullable": true
+          },
+          "integrationBatchId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "postedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "postedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PostedReceivingHeaderDtoPagedResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PostedReceivingHeaderDto"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PostedReceivingLineDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "postedReceivingHeaderId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "receivingLineId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "companyId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "itemId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "binId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quantityExpected": {
+            "type": "number",
+            "format": "double"
+          },
+          "quantityReceived": {
+            "type": "number",
+            "format": "double"
+          },
+          "uom": {
+            "type": "string",
+            "nullable": true
+          },
+          "postedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "postedBy": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PostedReceivingLineDtoPagedResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PostedReceivingLineDto"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPrevious": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNext": {
+            "type": "boolean",
+            "readOnly": true
           }
         },
         "additionalProperties": false

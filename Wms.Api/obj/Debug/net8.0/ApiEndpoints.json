@@ -553,6 +553,192 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Wms.Api.Controllers.PostedReceivingHeadersController",
+    "Method": "GetAll",
+    "RelativePath": "api/posted-receiving-headers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "companyId",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Wms.Api.Common.PagedResponse\u00601[[Wms.Api.Dtos.PostedReceivingHeaderDto, Wms.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.PostedReceivingHeadersController",
+    "Method": "GetById",
+    "RelativePath": "api/posted-receiving-headers/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Wms.Api.Dtos.PostedReceivingHeaderDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.PostedReceivingHeadersController",
+    "Method": "GetByReceivingHeader",
+    "RelativePath": "api/posted-receiving-headers/by-receiving/{receivingHeaderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "receivingHeaderId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "companyId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Wms.Api.Dtos.PostedReceivingHeaderDto, Wms.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.PostedReceivingLinesController",
+    "Method": "GetAll",
+    "RelativePath": "api/posted-receiving-lines",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "companyId",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Wms.Api.Common.PagedResponse\u00601[[Wms.Api.Dtos.PostedReceivingLineDto, Wms.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.PostedReceivingLinesController",
+    "Method": "GetById",
+    "RelativePath": "api/posted-receiving-lines/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Wms.Api.Dtos.PostedReceivingLineDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.PostedReceivingLinesController",
+    "Method": "GetByPostedHeader",
+    "RelativePath": "api/posted-receiving-lines/by-header/{postedHeaderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "postedHeaderId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "companyId",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Wms.Api.Dtos.PostedReceivingLineDto, Wms.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Wms.Api.Controllers.ReceivingHeadersController",
     "Method": "GetAll",
     "RelativePath": "api/ReceivingHeaders",

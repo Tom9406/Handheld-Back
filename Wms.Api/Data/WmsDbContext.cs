@@ -40,6 +40,8 @@ namespace Wms.Api.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            
+
             modelBuilder.Entity<DocumentSequence>(entity =>
             {
                 entity.ToTable("DocumentSequences", "core");
@@ -651,6 +653,13 @@ namespace Wms.Api.Data
                 entity.ToTable("PostedReceivingHeaders", "core");
                 entity.HasKey(e => e.Id);
 
+                //  Relación con ReceivingHeader
+                entity.HasOne(e => e.ReceivingHeader)
+                      .WithMany()
+                      .HasForeignKey(e => e.ReceivingHeaderId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                //  Relación con líneas
                 entity.HasMany(e => e.Lines)
                       .WithOne(l => l.PostedReceivingHeader)
                       .HasForeignKey(l => l.PostedReceivingHeaderId)

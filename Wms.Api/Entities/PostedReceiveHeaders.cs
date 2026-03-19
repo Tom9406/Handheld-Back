@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Wms.Api.Entities;
 
 public class PostedReceivingHeader
 {
@@ -6,6 +7,8 @@ public class PostedReceivingHeader
 
     // Referencia al documento original
     public Guid ReceivingHeaderId { get; set; }
+
+    public ReceivingHeader ReceivingHeader { get; set; } = null!;
 
     // Número consecutivo generado al postear
     public string PostedReceivingNo { get; set; } = null!;
