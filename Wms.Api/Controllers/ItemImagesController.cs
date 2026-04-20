@@ -1,16 +1,16 @@
-﻿
 using Microsoft.AspNetCore.Mvc;
-
 using Wms.Api.Data;
 using Wms.Api.DTOs;
 using Wms.Api.Entities;
 
 namespace Wms.Api.Controllers;
 
-[ApiController]
 [Route("api/item-images")]
-public class ItemImagesController : ControllerBase
+public class ItemImagesController : BaseController
 {
+    private static readonly string[] AllowedExtensions = [".jpg", ".jpeg", ".png", ".webp"];
+    private const long MaxFileSizeBytes = 5 * 1024 * 1024;
+
     private readonly WmsDbContext _db;
     private readonly IWebHostEnvironment _env;
 
@@ -29,22 +29,28 @@ public class ItemImagesController : ControllerBase
         if (dto.File == null || dto.File.Length == 0)
             return BadRequest("File required");
 
-        var item = await _db.Items.FindAsync(dto.ItemId);
+        if (dto.File.Length > MaxFileSizeBytes)
+            return BadRequest("The file is too large.");
 
+        var extension = Path.GetExtension(dto.File.FileName).ToLowerInvariant();
+        if (!AllowedExtensions.Contains(extension))
+            return BadRequest("Unsupported image format.");
+
+        var item = await _db.Items.FindAsync(dto.ItemId);
         if (item == null)
             return NotFound();
 
-        var folder = Path.Combine(
-            _env.WebRootPath,
-            "images",
-            "items",
-            dto.ItemId.ToString());
+        if (!HasCompanyAccess(item.CompanyId))
+            return Forbid();
 
-        if (!Directory.Exists(folder))
-            Directory.CreateDirectory(folder);
+        var webRootPath = string.IsNullOrWhiteSpace(_env.WebRootPath)
+            ? Path.Combine(AppContext.BaseDirectory, "wwwroot")
+            : _env.WebRootPath;
 
-        var fileName = Guid.NewGuid() + Path.GetExtension(dto.File.FileName);
+        var folder = Path.Combine(webRootPath, "images", "items", dto.ItemId.ToString());
+        Directory.CreateDirectory(folder);
 
+        var fileName = Guid.NewGuid() + extension;
         var filePath = Path.Combine(folder, fileName);
 
         using var stream = new FileStream(filePath, FileMode.Create);
@@ -63,13 +69,11 @@ public class ItemImagesController : ControllerBase
         _db.ItemImages.Add(image);
         await _db.SaveChangesAsync();
 
-        var result = new ItemImageDto
+        return Ok(new ItemImageDto
         {
             Id = image.Id,
             Url = image.Url,
             IsPrimary = image.IsPrimary
-        };
-
-        return Ok(result);
+        });
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Common;
 using Wms.Api.Data;
@@ -6,9 +6,8 @@ using Wms.Api.Dtos;
 
 namespace Wms.Api.Controllers;
 
-[ApiController]
 [Route("api/posted-receiving-headers")]
-public class PostedReceivingHeadersController : ControllerBase
+public class PostedReceivingHeadersController : BaseController
 {
     private readonly WmsDbContext _db;
 
@@ -17,22 +16,17 @@ public class PostedReceivingHeadersController : ControllerBase
         _db = db;
     }
 
-    // ====================================================
-    // GET: api/posted-receiving-headers?companyId={companyId}&pageNumber=1&pageSize=20
-    // ====================================================
     [HttpGet]
     public async Task<ActionResult<PagedResponse<PostedReceivingHeaderDto>>> GetAll(
         [FromQuery] Guid? companyId,
         [FromQuery] PaginationParameters? pagination = null)
     {
         pagination ??= new PaginationParameters();
+        var activeCompanyId = ResolveCompanyId(companyId);
 
         var query = _db.PostedReceivingHeaders
             .AsNoTracking()
-            .AsQueryable();
-
-        if (companyId.HasValue)
-            query = query.Where(x => x.CompanyId == companyId.Value);
+            .Where(x => x.CompanyId == activeCompanyId);
 
         var totalRecords = await query.CountAsync();
 
@@ -64,27 +58,24 @@ public class PostedReceivingHeadersController : ControllerBase
             })
             .ToListAsync();
 
-        var response = new PagedResponse<PostedReceivingHeaderDto>
+        return Ok(new PagedResponse<PostedReceivingHeaderDto>
         {
             Data = data,
             PageNumber = pagination.PageNumber,
             PageSize = pagination.PageSize,
             TotalRecords = totalRecords,
             TotalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize)
-        };
-
-        return Ok(response);
+        });
     }
 
-    // ====================================================
-    // GET: api/posted-receiving-headers/{id}
-    // ====================================================
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<ActionResult<PostedReceivingHeaderDto>> GetById(Guid id)
     {
-        var x = await _db.PostedReceivingHeaders
+        var allowedCompanies = AccessibleCompanyIds;
+
+        var data = await _db.PostedReceivingHeaders
             .AsNoTracking()
-            .Where(p => p.Id == id)
+            .Where(p => p.Id == id && allowedCompanies.Contains(p.CompanyId))
             .Select(x => new PostedReceivingHeaderDto
             {
                 Id = x.Id,
@@ -109,24 +100,20 @@ public class PostedReceivingHeadersController : ControllerBase
             })
             .FirstOrDefaultAsync();
 
-        if (x == null)
+        if (data == null)
             return NotFound();
 
-        return Ok(x);
+        return Ok(data);
     }
 
-    // ====================================================
-    // GET: api/posted-receiving-headers/by-receiving/{receivingHeaderId}?companyId={companyId}
-    // ====================================================
-    [HttpGet("by-receiving/{receivingHeaderId}")]
-    public async Task<ActionResult<IEnumerable<PostedReceivingHeaderDto>>> GetByReceivingHeader(
-        Guid receivingHeaderId,
-        [FromQuery] Guid companyId)
+    [HttpGet("by-receiving/{receivingHeaderId:guid}")]
+    public async Task<ActionResult<IEnumerable<PostedReceivingHeaderDto>>> GetByReceivingHeader(Guid receivingHeaderId, [FromQuery] Guid? companyId = null)
     {
+        var activeCompanyId = ResolveCompanyId(companyId);
+
         var data = await _db.PostedReceivingHeaders
             .AsNoTracking()
-            .Where(x => x.ReceivingHeaderId == receivingHeaderId
-                     && x.CompanyId == companyId)
+            .Where(x => x.ReceivingHeaderId == receivingHeaderId && x.CompanyId == activeCompanyId)
             .OrderByDescending(x => x.PostedAt)
             .Select(x => new PostedReceivingHeaderDto
             {

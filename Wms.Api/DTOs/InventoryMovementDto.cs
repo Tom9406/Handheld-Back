@@ -8,10 +8,10 @@ namespace Wms.Api.Dtos.InventoryMovement
 
         public Guid? ItemId { get; set; }
         public string ItemNo { get; set; } = null!;
-        public string ItemDescription { get; set; } = null!;
+        public string? ItemDescription { get; set; }
 
         public Guid? BinId { get; set; }
-        public string BinCode { get; set; } = null!;
+        public string? BinCode { get; set; }
 
         public decimal Quantity { get; set; }
 

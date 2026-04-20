@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Common;
 using Wms.Api.Data;
@@ -6,9 +6,8 @@ using Wms.Api.Dtos.Bin;
 
 namespace Wms.Api.Controllers;
 
-[ApiController]
 [Route("api/bins")]
-public class BinsController : ControllerBase
+public class BinsController : BaseController
 {
     private readonly WmsDbContext _db;
 
@@ -17,21 +16,18 @@ public class BinsController : ControllerBase
         _db = db;
     }
 
-    // ====================================================
-    // GET: api/bins?companyId={companyId}&activeOnly=true&pageNumber=1&pageSize=20
-    // ====================================================
     [HttpGet]
     public async Task<ActionResult<PagedResponse<BinDto>>> GetBins(
         [FromQuery] Guid? companyId,
         [FromQuery] bool activeOnly = true,
         [FromQuery] PaginationParameters? pagination = null)
     {
+        pagination ??= new PaginationParameters();
+        var activeCompanyId = ResolveCompanyId(companyId);
+
         var query = _db.Bins
             .AsNoTracking()
-            .AsQueryable();
-
-        if (companyId.HasValue)
-            query = query.Where(b => b.CompanyId == companyId.Value);
+            .Where(b => b.CompanyId == activeCompanyId);
 
         if (activeOnly)
             query = query.Where(b => b.IsActive);
@@ -56,27 +52,24 @@ public class BinsController : ControllerBase
             })
             .ToListAsync();
 
-        var response = new PagedResponse<BinDto>
+        return Ok(new PagedResponse<BinDto>
         {
             Data = bins,
             PageNumber = pagination.PageNumber,
             PageSize = pagination.PageSize,
             TotalRecords = totalRecords,
             TotalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize)
-        };
-
-        return Ok(response);
+        });
     }
 
-    // ====================================================
-    // GET: api/bins/{id}
-    // ====================================================
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<ActionResult<BinDetailDto>> GetBin(Guid id)
     {
+        var allowedCompanies = AccessibleCompanyIds;
+
         var bin = await _db.Bins
             .AsNoTracking()
-            .Where(b => b.Id == id)
+            .Where(b => b.Id == id && allowedCompanies.Contains(b.CompanyId))
             .Select(b => new BinDetailDto
             {
                 Id = b.Id,
@@ -87,14 +80,8 @@ public class BinsController : ControllerBase
                 BinType = b.BinType,
                 AllowPicking = b.AllowPicking,
                 AllowPutaway = b.AllowPutaway,
-
                 CompanyId = b.CompanyId,
                 CompanyName = b.Company.Name,
-
-                // Preparado para futuro Warehouse
-                // WarehouseId = b.WarehouseId,
-                // WarehouseCode = b.Warehouse.Code,
-
                 CreatedAt = b.CreatedAt,
                 UpdatedAt = b.UpdatedAt
             })

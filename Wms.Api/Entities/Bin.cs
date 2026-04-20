@@ -28,7 +28,7 @@ namespace Wms.Api.Entities
         public DateTime? UpdatedAt { get; set; }
 
         // ===== Navegación =====
-        public Company Company { get; set; }
+        public Company Company { get; set; } = null!;
         /*public Warehouse? Warehouse { get; set; }*/
     }
 }

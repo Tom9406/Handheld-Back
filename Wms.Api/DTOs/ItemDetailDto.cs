@@ -9,7 +9,7 @@ namespace Wms.Api.Dtos.Item
         public string ItemNo { get; set; } = null!;
         public string? Description { get; set; }
 
-        public string UOM { get; set; }
+        public string UOM { get; set; } = string.Empty;
         public string BaseUOM { get; set; } = null!;
         public string? SalesUOM { get; set; }
         public string? PurchaseUOM { get; set; }
@@ -64,6 +64,6 @@ namespace Wms.Api.Dtos.Item
 
         public bool StockoutWarning { get; set; }
 
-        public List<ItemImageDto> Images { get; set; }
+        public List<ItemImageDto> Images { get; set; } = new();
     }
 }

@@ -9,7 +9,7 @@ namespace Wms.Api.Dtos.Item
         public string ItemNo { get; set; } = null!;
         public string? Description { get; set; }
 
-        public string UOM { get; set; }
+        public string UOM { get; set; } = string.Empty;
 
         public bool IsActive { get; set; }
 
@@ -27,6 +27,6 @@ namespace Wms.Api.Dtos.Item
         public Guid CompanyId { get; set; }
 
         public DateTime CreateAt { get; set; }
-        public List<ItemImageDto> Images { get; set; }
+        public List<ItemImageDto> Images { get; set; } = new();
     }
 }

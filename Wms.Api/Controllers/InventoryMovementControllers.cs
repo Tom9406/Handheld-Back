@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.InkML;
+using ClosedXML.Excel;
 using Handheld.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +8,8 @@ using Wms.Api.DTOs;
 
 namespace Wms.Api.Controllers;
 
-[ApiController]
 [Route("api/movements")]
-public class InventoryMovementsController : ControllerBase
+public class InventoryMovementsController : BaseController
 {
     private readonly WmsDbContext _db;
 
@@ -20,55 +18,41 @@ public class InventoryMovementsController : ControllerBase
         _db = db;
     }
 
-    // ======================================================
-    // GET: api/movements?pageNumber=1&pageSize=20
-    //      &itemId=GUID
-    //      &binId=GUID
-    //      &movementType=IN
-    //      &referenceNo=SO001
-    //      &dateFrom=2025-01-01
-    //      &dateTo=2025-01-31
-    // ======================================================
     [HttpGet]
     public async Task<IActionResult> GetInventoryMovements(
-    Guid companyId,
-    int pageNumber = 1,
-    int pageSize = 20,
-    Guid? itemId = null,
-    Guid? binId = null,
-    string? movementType = null,
-    string? referenceNo = null,
-    DateTime? dateFrom = null,
-    DateTime? dateTo = null,
-    bool sortDesc = true,
-    string? search = null)
+        [FromQuery] Guid? companyId,
+        int pageNumber = 1,
+        int pageSize = 20,
+        Guid? itemId = null,
+        Guid? binId = null,
+        string? movementType = null,
+        string? referenceNo = null,
+        DateTime? dateFrom = null,
+        DateTime? dateTo = null,
+        bool sortDesc = true,
+        string? search = null)
     {
+        var activeCompanyId = ResolveCompanyId(companyId);
+
         if (pageNumber <= 0) pageNumber = 1;
         if (pageSize <= 0) pageSize = 20;
         if (pageSize > 200) pageSize = 200;
 
         var query = _db.InventoryMovements
             .AsNoTracking()
-            .Where(x => x.CompanyId == companyId);
+            .Where(x => x.CompanyId == activeCompanyId);
 
-        // ========================
-        // Global Search
-        // ========================
         if (!string.IsNullOrWhiteSpace(search))
         {
             var pattern = $"%{search}%";
-
             query = query.Where(x =>
                 EF.Functions.Like(x.Item.ItemNo, pattern) ||
-                EF.Functions.Like(x.Item.Description, pattern) ||
+                EF.Functions.Like(x.Item.Description!, pattern) ||
                 EF.Functions.Like(x.Bin.BinCode, pattern) ||
                 (x.ReferenceNo != null && EF.Functions.Like(x.ReferenceNo, pattern)) ||
                 EF.Functions.Like(x.MovementType, pattern));
         }
 
-        // ========================
-        // Filters
-        // ========================
         if (itemId.HasValue)
             query = query.Where(x => x.ItemId == itemId);
 
@@ -79,9 +63,7 @@ public class InventoryMovementsController : ControllerBase
             query = query.Where(x => x.MovementType == movementType);
 
         if (!string.IsNullOrWhiteSpace(referenceNo))
-            query = query.Where(x =>
-                x.ReferenceNo != null &&
-                x.ReferenceNo.Contains(referenceNo));
+            query = query.Where(x => x.ReferenceNo != null && x.ReferenceNo.Contains(referenceNo));
 
         if (dateFrom.HasValue)
             query = query.Where(x => x.CreatedAt >= dateFrom.Value);
@@ -89,16 +71,10 @@ public class InventoryMovementsController : ControllerBase
         if (dateTo.HasValue)
             query = query.Where(x => x.CreatedAt <= dateTo.Value);
 
-        // ========================
-        // Sorting
-        // ========================
         query = sortDesc
             ? query.OrderByDescending(x => x.CreatedAt)
             : query.OrderBy(x => x.CreatedAt);
 
-        // ========================
-        // Projection
-        // ========================
         var baseQuery = query.Select(x => new InventoryMovementDto
         {
             Id = x.Id,
@@ -120,27 +96,24 @@ public class InventoryMovementsController : ControllerBase
             .Take(pageSize)
             .ToListAsync();
 
-        var response = new
+        return Ok(new
         {
             pageNumber,
             pageSize,
             totalRecords,
             totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize),
             data
-        };
-
-        return Ok(response);
+        });
     }
 
-    // ======================================================
-    // GET: api/movements/{id}
-    // ======================================================
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById(Guid id, Guid companyId)
+    public async Task<IActionResult> GetById(Guid id, [FromQuery] Guid? companyId = null)
     {
+        var activeCompanyId = ResolveCompanyId(companyId);
+
         var movement = await _db.InventoryMovements
             .AsNoTracking()
-            .Where(x => x.Id == id && x.CompanyId == companyId)
+            .Where(x => x.Id == id && x.CompanyId == activeCompanyId)
             .Select(x => new InventoryMovementDetailDto
             {
                 Id = x.Id,
@@ -153,7 +126,6 @@ public class InventoryMovementsController : ControllerBase
                 MovementType = x.MovementType,
                 ReferenceNo = x.ReferenceNo,
                 CreatedAt = x.CreatedAt
-
             })
             .FirstOrDefaultAsync();
 
@@ -163,11 +135,13 @@ public class InventoryMovementsController : ControllerBase
         return Ok(movement);
     }
 
-    [HttpGet("item/{itemId}")]
-    public async Task<IActionResult> GetItemMovements(Guid itemId, Guid companyId)
+    [HttpGet("item/{itemId:guid}")]
+    public async Task<IActionResult> GetItemMovements(Guid itemId, [FromQuery] Guid? companyId = null)
     {
+        var activeCompanyId = ResolveCompanyId(companyId);
+
         var movements = await _db.InventoryMovements
-            .Where(x => x.CompanyId == companyId && x.ItemId == itemId)
+            .Where(x => x.CompanyId == activeCompanyId && x.ItemId == itemId)
             .Select(m => new InventoryMovementDto
             {
                 Id = m.Id,
@@ -186,8 +160,6 @@ public class InventoryMovementsController : ControllerBase
         return Ok(movements);
     }
 
-
-
     [HttpGet("export")]
     public IActionResult ExportTemplate()
     {
@@ -196,40 +168,16 @@ public class InventoryMovementsController : ControllerBase
 
         var headers = new[]
         {
-        "ItemNo",
-        "BinCode",
-        "WarehouseCode",
-        "Quantity",
-        "MovementType",
-        "ReferenceNo",
-        "EntityType",
-        "EntityReference",
-        "OldStatus",
-        "NewStatus",
-        "SourceSystem",
-        "CreatedBy"
-    };
+            "ItemNo", "BinCode", "WarehouseCode", "Quantity", "MovementType", "ReferenceNo",
+            "EntityType", "EntityReference", "OldStatus", "NewStatus", "SourceSystem", "CreatedBy"
+        };
 
-        // Definir rango de la tabla
-        var range = worksheet.Range(1, 1, 1, headers.Length);
-
-        // Crear tabla
-        var table = range.CreateTable();
-
-        // Nombre opcional de la tabla
-        table.Name = "InventoryMovementsTable";
-
-        // Estilo visual 
-        table.Theme = XLTableTheme.TableStyleMedium2;
-
-        // Activar filtros 
-        table.ShowAutoFilter = true;
-
-        for (int i = 0; i < headers.Length; i++)
+        for (var i = 0; i < headers.Length; i++)
         {
             worksheet.Cell(1, i + 1).Value = headers[i];
         }
 
+        worksheet.Range(1, 1, 1, headers.Length).CreateTable().Theme = XLTableTheme.TableStyleMedium2;
         worksheet.Columns().AdjustToContents();
 
         using var stream = new MemoryStream();
@@ -238,17 +186,16 @@ public class InventoryMovementsController : ControllerBase
         return File(
             stream.ToArray(),
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "inventory_movements_template.xlsx"
-        );
+            "inventory_movements_template.xlsx");
     }
-
 
     [HttpPost("import")]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> ImportInventoryMovements(
-    [FromForm] ImportItemsRequestDto request,
-    [FromQuery] Guid companyId)
+        [FromForm] ImportItemsRequestDto request,
+        [FromQuery] Guid? companyId = null)
     {
+        var activeCompanyId = ResolveCompanyId(companyId);
         var file = request.File;
 
         if (file == null || file.Length == 0)
@@ -265,25 +212,21 @@ public class InventoryMovementsController : ControllerBase
         if (rows == null)
             return BadRequest("Excel empty");
 
-        var companyExists = await _db.Companies
-            .AnyAsync(c => c.Id == companyId);
-
+        var companyExists = await _db.Companies.AnyAsync(c => c.Id == activeCompanyId);
         if (!companyExists)
             return BadRequest("Company not found");
 
-        int created = 0;
-        int skipped = 0;
+        var created = 0;
+        var skipped = 0;
 
         foreach (var row in rows)
         {
             var itemNo = row.Cell(1).GetString();
             var binCode = row.Cell(2).GetString();
-            var warehouseCode = row.Cell(3).GetString();
             var quantity = row.Cell(4).GetValue<decimal>();
             var movementType = row.Cell(5).GetString();
             var referenceNo = row.Cell(6).GetString();
             var entityType = row.Cell(7).GetString();
-            var entityReference = row.Cell(8).GetString();
             var oldStatus = row.Cell(9).GetString();
             var newStatus = row.Cell(10).GetString();
             var sourceSystem = row.Cell(11).GetString();
@@ -295,13 +238,8 @@ public class InventoryMovementsController : ControllerBase
                 continue;
             }
 
-            // =========================
-            // Resolver Item
-            // =========================
             var item = await _db.Items
-                .FirstOrDefaultAsync(i =>
-                    i.CompanyId == companyId &&
-                    i.ItemNo == itemNo);
+                .FirstOrDefaultAsync(i => i.CompanyId == activeCompanyId && i.ItemNo == itemNo);
 
             if (item == null)
             {
@@ -309,88 +247,45 @@ public class InventoryMovementsController : ControllerBase
                 continue;
             }
 
-            // =========================
-            // Resolver Bin
-            // =========================
             Guid? binId = null;
-
             if (!string.IsNullOrWhiteSpace(binCode))
             {
                 var bin = await _db.Bins
-                    .FirstOrDefaultAsync(b =>
-                        b.CompanyId == companyId &&
-                        b.BinCode == binCode);
+                    .FirstOrDefaultAsync(b => b.CompanyId == activeCompanyId && b.BinCode == binCode);
 
                 if (bin != null)
                     binId = bin.Id;
             }
 
-            // =========================
-            // Resolver Warehouse
-            // =========================
-            /*Guid? warehouseId = null;
-
-            if (!string.IsNullOrWhiteSpace(warehouseCode))
-            {
-                var warehouse = await _db.Warehouses
-                    .FirstOrDefaultAsync(w =>
-                        w.CompanyId == companyId &&
-                        w.Code == warehouseCode);
-
-                if (warehouse != null)
-                    warehouseId = warehouse.Id;
-            }*/
-
-            // =========================
-            // Validar MovementType
-            // =========================
             var validTypes = new[] { "IN", "OUT", "TRANSFER", "ADJUSTMENT" };
-
             if (!validTypes.Contains(movementType))
             {
                 skipped++;
                 continue;
             }
 
-            var movement = new InventoryMovements
+            _db.InventoryMovements.Add(new InventoryMovements
             {
                 Id = Guid.NewGuid(),
-                CompanyId = companyId,
+                CompanyId = activeCompanyId,
                 CreatedAt = DateTime.UtcNow,
-
                 ItemId = item.Id,
                 BinId = binId,
-                //WarehouseId = warehouseId,
-
                 Quantity = quantity,
                 MovementType = movementType,
                 ReferenceNo = referenceNo,
-
                 EntityType = entityType,
                 OldStatus = oldStatus,
                 NewStatus = newStatus,
+                SourceSystem = string.IsNullOrWhiteSpace(sourceSystem) ? "EXCEL_IMPORT" : sourceSystem,
+                CreatedBy = string.IsNullOrWhiteSpace(createdBy) ? UserEmail : createdBy
+            });
 
-                SourceSystem = string.IsNullOrWhiteSpace(sourceSystem)
-                    ? "EXCEL_IMPORT"
-                    : sourceSystem,
-
-                CreatedBy = string.IsNullOrWhiteSpace(createdBy)
-                    ? "EXCEL_IMPORT"
-                    : createdBy
-            };
-
-            _db.InventoryMovements.Add(movement);
             created++;
         }
 
         await _db.SaveChangesAsync();
 
-        return Ok(new
-        {
-            created,
-            skipped
-        });
+        return Ok(new { created, skipped });
     }
-
-
 }

@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Data;
 using Wms.Api.Dtos.Company;
 
 namespace Wms.Api.Controllers;
 
-[ApiController]
 [Route("api/companies")]
-public class CompaniesController : ControllerBase
+public class CompaniesController : BaseController
 {
     private readonly WmsDbContext _db;
 
@@ -16,13 +15,6 @@ public class CompaniesController : ControllerBase
         _db = db;
     }
 
-    // ======================================================
-    // GET: api/companies?pageNumber=1&pageSize=20
-    //      &name=ABC
-    //      &code=COMP01
-    //      &isActive=true
-    //      &sortBy=Name
-    // ======================================================
     [HttpGet]
     public async Task<IActionResult> GetCompanies(
         int pageNumber = 1,
@@ -37,13 +29,12 @@ public class CompaniesController : ControllerBase
         if (pageSize <= 0) pageSize = 20;
         if (pageSize > 100) pageSize = 100;
 
+        var allowedCompanies = AccessibleCompanyIds;
+
         var query = _db.Companies
             .AsNoTracking()
-            .AsQueryable();
+            .Where(x => allowedCompanies.Contains(x.Id));
 
-        // ========================
-        // Filters
-        // ========================
         if (!string.IsNullOrWhiteSpace(name))
             query = query.Where(x => x.Name.Contains(name));
 
@@ -53,22 +44,11 @@ public class CompaniesController : ControllerBase
         if (isActive.HasValue)
             query = query.Where(x => x.IsActive == isActive);
 
-        // ========================
-        // Sorting
-        // ========================
         query = sortBy?.ToLower() switch
         {
-            "name" => sortDesc
-                ? query.OrderByDescending(x => x.Name)
-                : query.OrderBy(x => x.Name),
-
-            "code" => sortDesc
-                ? query.OrderByDescending(x => x.Code)
-                : query.OrderBy(x => x.Code),
-
-            _ => sortDesc
-                ? query.OrderByDescending(x => x.CreatedAt)
-                : query.OrderBy(x => x.CreatedAt)
+            "name" => sortDesc ? query.OrderByDescending(x => x.Name) : query.OrderBy(x => x.Name),
+            "code" => sortDesc ? query.OrderByDescending(x => x.Code) : query.OrderBy(x => x.Code),
+            _ => sortDesc ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt)
         };
 
         var totalRecords = await query.CountAsync();
@@ -90,24 +70,21 @@ public class CompaniesController : ControllerBase
             })
             .ToListAsync();
 
-        var response = new
+        return Ok(new
         {
             pageNumber,
             pageSize,
             totalRecords,
             totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize),
             data
-        };
-
-        return Ok(response);
+        });
     }
 
-    // ======================================================
-    // GET: api/companies/{id}
-    // ======================================================
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
+        EnsureCompanyAccess(id);
+
         var company = await _db.Companies
             .AsNoTracking()
             .Where(x => x.Id == id)
@@ -142,28 +119,18 @@ public class CompaniesController : ControllerBase
         return Ok(company);
     }
 
-
-
-    // ======================================================
-    // POST: api/companies
-    // ======================================================
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCompanyDto dto)
     {
+        if (Role != "ADMIN")
+            return Forbid();
+
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        // Validar duplicado por Code
-        var exists = await _db.Companies
-            .AnyAsync(x => x.Code == dto.Code);
-
+        var exists = await _db.Companies.AnyAsync(x => x.Code == dto.Code);
         if (exists)
-        {
-            return Conflict(new
-            {
-                message = "Company code already exists."
-            });
-        }
+            return Conflict(new { message = "Company code already exists." });
 
         var entity = new Entities.Company
         {
@@ -194,14 +161,10 @@ public class CompaniesController : ControllerBase
         }
         catch (DbUpdateException)
         {
-            // Protección adicional si existe índice único en BD
-            return Conflict(new
-            {
-                message = "Company code already exists."
-            });
+            return Conflict(new { message = "Company code already exists." });
         }
 
-        var result = new CompanyDto
+        return CreatedAtAction(nameof(GetById), new { id = entity.Id }, new CompanyDto
         {
             Id = entity.Id,
             Code = entity.Code,
@@ -212,11 +175,6 @@ public class CompaniesController : ControllerBase
             TimeZone = entity.TimeZone,
             IsWmsEnabled = entity.IsWmsEnabled,
             CreatedAt = entity.CreatedAt
-        };
-
-        return CreatedAtAction(nameof(GetById),
-            new { id = entity.Id },
-            result);
+        });
     }
-
 }

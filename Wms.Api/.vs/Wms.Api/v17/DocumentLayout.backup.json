@@ -3,56 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\entities\\postedreceivingheader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:entities\\postedreceivingheader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\controllers\\postedreceivingheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\postedreceivingheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\controllers\\binscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\binscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\dtos\\postedreceivinglinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\postedreceivinglinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\dtos\\postedreceivingheaderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\postedreceivingheaderdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\entities\\postedreceiveheaders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:entities\\postedreceiveheaders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\data\\wmsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:data\\wmsdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\entities\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:entities\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\controllers\\receivinglinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\receivinglinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\controllers\\receivingheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\receivingheaderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\dtos\\receivinglinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\receivinglinedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\dtos\\itemdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:dtos\\itemdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|c:\\users\\tony\\documents\\gitktraken\\handheld-back\\wms.api\\controllers\\usercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56094334-0FC9-45AB-8C73-5B209CF5AC9A}|Wms.Api.csproj|solutionrelative:controllers\\usercontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,172 +22,48 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PostedReceivingHeader.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\PostedReceivingHeader.cs",
-              "RelativeDocumentMoniker": "Entities\\PostedReceivingHeader.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\PostedReceivingHeader.cs",
-              "RelativeToolTip": "Entities\\PostedReceivingHeader.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAmwDQAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:47:41.094Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PostedReceivingHeadersController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\PostedReceivingHeadersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PostedReceivingHeadersController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\PostedReceivingHeadersController.cs",
-              "RelativeToolTip": "Controllers\\PostedReceivingHeadersController.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAwwJwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:47:10.666Z",
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-20T14:37:36.496Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-20T14:37:23.088Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "BinsController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\BinsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\BinsController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\BinsController.cs",
-              "RelativeToolTip": "Controllers\\BinsController.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAowGwAAAAAAAAAAAAAAA==",
+              "Title": "UserContext.cs",
+              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\UserContext.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserContext.cs",
+              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\UserContext.cs",
+              "RelativeToolTip": "Controllers\\UserContext.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:42:17.332Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PostedReceivingLineDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\PostedReceivingLineDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\PostedReceivingLineDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\PostedReceivingLineDto.cs",
-              "RelativeToolTip": "DTOs\\PostedReceivingLineDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:41:55.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PostedReceivingHeaderDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\PostedReceivingHeaderDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\PostedReceivingHeaderDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\PostedReceivingHeaderDto.cs",
-              "RelativeToolTip": "DTOs\\PostedReceivingHeaderDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:40:33.98Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PostedReceiveHeaders.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\PostedReceiveHeaders.cs",
-              "RelativeDocumentMoniker": "Entities\\PostedReceiveHeaders.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\PostedReceiveHeaders.cs",
-              "RelativeToolTip": "Entities\\PostedReceiveHeaders.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAMAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:35:37.435Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "WmsDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Data\\WmsDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\WmsDbContext.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Data\\WmsDbContext.cs",
-              "RelativeToolTip": "Data\\WmsDbContext.cs",
-              "ViewState": "AgIAABoBAAAAAAAAAAAwwIoCAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:26:58.182Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Item.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\Item.cs",
-              "RelativeDocumentMoniker": "Entities\\Item.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Entities\\Item.cs",
-              "RelativeToolTip": "Entities\\Item.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAmwEYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-19T13:24:54.364Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ReceivingLinesController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ReceivingLinesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ReceivingLinesController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ReceivingLinesController.cs",
-              "RelativeToolTip": "Controllers\\ReceivingLinesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHgAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T15:31:17.847Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ReceivingLineDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\ReceivingLineDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\ReceivingLineDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\ReceivingLineDto.cs",
-              "RelativeToolTip": "DTOs\\ReceivingLineDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBYAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T15:07:58.533Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ReceivingHeadersController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ReceivingHeadersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ReceivingHeadersController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ReceivingHeadersController.cs",
-              "RelativeToolTip": "Controllers\\ReceivingHeadersController.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAkwHIAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T15:00:31.03Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ItemDetailDto.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\ItemDetailDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\ItemDetailDto.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\DTOs\\ItemDetailDto.cs",
-              "RelativeToolTip": "DTOs\\ItemDetailDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T13:38:50.292Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ItemsController.cs",
-              "DocumentMoniker": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ItemsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ItemsController.cs",
-              "ToolTip": "C:\\Users\\Tony\\Documents\\GitKtraken\\Handheld-Back\\Wms.Api\\Controllers\\ItemsController.cs",
-              "RelativeToolTip": "Controllers\\ItemsController.cs",
-              "ViewState": "AgIAAJsAAAAAAAAAAAAvwKkAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-18T13:37:43.325Z"
+              "WhenOpened": "2026-04-16T17:04:38.331Z"
             }
           ]
         }

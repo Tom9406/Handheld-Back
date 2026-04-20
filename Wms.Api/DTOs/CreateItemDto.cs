@@ -7,8 +7,8 @@
         public string ItemType { get; set; } = null!;
         public string? Barcode { get; set; }
         public string? AltBarcode { get; set; }
-        public string Part_No { get; set; }
-        public string Alternative_Code { get; set; }
+        public string Part_No { get; set; } = string.Empty;
+        public string Alternative_Code { get; set; } = string.Empty;
 
         public bool IsLotTracked { get; set; }
         public bool IsSerialTracked { get; set; }
@@ -24,6 +24,6 @@
         public string? CategoryCode { get; set; }
         public string? Brand { get; set; }
 
-        public List<ItemImageDto> Images { get; set; }
+        public List<ItemImageDto> Images { get; set; } = new();
     }
 }

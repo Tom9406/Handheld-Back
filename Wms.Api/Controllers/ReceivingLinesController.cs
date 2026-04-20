@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Common;
 using Wms.Api.Data;
@@ -6,9 +7,10 @@ using Wms.Api.Dtos.ReceivingLine;
 
 namespace Wms.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class ReceivingLinesController : ControllerBase
+public class ReceivingLinesController : BaseController
 {
     private readonly WmsDbContext _context;
 
@@ -18,21 +20,18 @@ public class ReceivingLinesController : ControllerBase
     }
 
     // ====================================================
-    // GET: api/ReceivingLines?companyId={id}&pageNumber=1&pageSize=20
+    // GET ALL
     // ====================================================
     [HttpGet]
     public async Task<ActionResult<PagedResponse<ReceivingLineDto>>> GetAll(
-        [FromQuery] Guid? companyId,
         [FromQuery] PaginationParameters? pagination = null)
     {
+        var companyId = CompanyId;
         pagination ??= new PaginationParameters();
 
         var query = _context.ReceivingLines
             .AsNoTracking()
-            .AsQueryable();
-
-        if (companyId.HasValue)
-            query = query.Where(l => l.CompanyId == companyId.Value);
+            .Where(l => l.CompanyId == companyId);
 
         var totalRecords = await query.CountAsync();
 
@@ -55,32 +54,40 @@ public class ReceivingLinesController : ControllerBase
                 QuantityExpected = l.QuantityExpected,
                 QuantityReceived = l.QuantityReceived,
 
+                PostedQuantityReceived = _context.PostedReceivingLines
+                    .Where(x =>
+                        x.ReceivingLineId == l.Id &&
+                        x.CompanyId == companyId)
+                    .Sum(x => (decimal?)x.QuantityReceived) ?? 0,
+
                 UOM = l.UOM,
                 CreatedAt = l.CreatedAt
             })
             .ToListAsync();
 
-        var response = new PagedResponse<ReceivingLineDto>
+        return Ok(new PagedResponse<ReceivingLineDto>
         {
             Data = lines,
             PageNumber = pagination.PageNumber,
             PageSize = pagination.PageSize,
             TotalRecords = totalRecords,
             TotalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize)
-        };
-
-        return Ok(response);
+        });
     }
 
     // ====================================================
-    // GET: api/ReceivingLines/{id}/detail
+    // GET DETAIL
     // ====================================================
-    [HttpGet("{id}/detail")]
+    [HttpGet("{id:guid}/detail")]
     public async Task<ActionResult<ReceivingLineDetailDto>> GetDetail(Guid id)
     {
+        var companyId = CompanyId;
+
         var line = await _context.ReceivingLines
             .AsNoTracking()
-            .Where(l => l.Id == id)
+            .Where(l =>
+                l.Id == id &&
+                l.CompanyId == companyId)
             .Select(l => new ReceivingLineDetailDto
             {
                 Id = l.Id,
@@ -113,18 +120,21 @@ public class ReceivingLinesController : ControllerBase
     }
 
     // ====================================================
-    // GET: api/ReceivingLines/by-header/{headerId}?pageNumber=1&pageSize=20
+    // GET BY HEADER
     // ====================================================
-    [HttpGet("by-header/{headerId}")]
+    [HttpGet("by-header/{headerId:guid}")]
     public async Task<ActionResult<PagedResponse<ReceivingLineDto>>> GetByHeader(
-    Guid headerId,
-    [FromQuery] PaginationParameters? pagination = null)
+        Guid headerId,
+        [FromQuery] PaginationParameters? pagination = null)
     {
+        var companyId = CompanyId;
         pagination ??= new PaginationParameters();
 
         var query = _context.ReceivingLines
-            .Where(l => l.ReceivingHeaderId == headerId)
-            .AsNoTracking();
+            .AsNoTracking()
+            .Where(l =>
+                l.ReceivingHeaderId == headerId &&
+                l.CompanyId == companyId);
 
         var totalRecords = await query.CountAsync();
 
@@ -147,9 +157,10 @@ public class ReceivingLinesController : ControllerBase
                 QuantityExpected = l.QuantityExpected,
                 QuantityReceived = l.QuantityReceived,
 
-                
                 PostedQuantityReceived = _context.PostedReceivingLines
-                    .Where(x => x.ReceivingLineId == l.Id)
+                    .Where(x =>
+                        x.ReceivingLineId == l.Id &&
+                        x.CompanyId == companyId)
                     .Sum(x => (decimal?)x.QuantityReceived) ?? 0,
 
                 UOM = l.UOM,
@@ -157,109 +168,105 @@ public class ReceivingLinesController : ControllerBase
             })
             .ToListAsync();
 
-        var response = new PagedResponse<ReceivingLineDto>
+        return Ok(new PagedResponse<ReceivingLineDto>
         {
             Data = lines,
             PageNumber = pagination.PageNumber,
             PageSize = pagination.PageSize,
             TotalRecords = totalRecords,
             TotalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize)
-        };
-
-        return Ok(response);
+        });
     }
 
+    // ====================================================
+    // UPDATE LINE
+    // ====================================================
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateLine(Guid id, UpdateReceivingLineDto dto)
     {
-        var line = await _context.ReceivingLines
-            .FirstOrDefaultAsync(x => x.Id == id);
+        var companyId = CompanyId;
+        var userEmail = UserEmail;
 
-        if (line == null)
-            return NotFound();
-
-        // ===============================
-        // VALIDACIONES
-        // ===============================
+        if (dto == null)
+            return BadRequest("Invalid payload");
 
         if (dto.QuantityReceived < 0)
             return BadRequest("Invalid quantity");
 
-        // Cantidad ya posteada (histórica)
+        var line = await _context.ReceivingLines
+            .FirstOrDefaultAsync(x =>
+                x.Id == id &&
+                x.CompanyId == companyId);
+
+        if (line == null)
+            return NotFound();
+
         var alreadyPostedQty = await _context.PostedReceivingLines
-            .Where(x => x.ReceivingLineId == id)
+            .Where(x =>
+                x.ReceivingLineId == id &&
+                x.CompanyId == companyId)
             .SumAsync(x => (decimal?)x.QuantityReceived) ?? 0;
 
         if (alreadyPostedQty + dto.QuantityReceived > line.QuantityExpected)
             return BadRequest(
-                $"Received quantity cannot exceed expected quantity. Already posted: {alreadyPostedQty}");
-
-        // ===============================
-        // ACTUALIZAR LINEA
-        // ===============================
+                $"Received cannot exceed expected. Already posted: {alreadyPostedQty}");
 
         line.QuantityReceived = dto.QuantityReceived;
 
         var totalProcessed = alreadyPostedQty + line.QuantityReceived;
 
         if (totalProcessed <= 0)
-        {
             line.Status = "OPEN";
-        }
         else if (totalProcessed < line.QuantityExpected)
-        {
             line.Status = "PARTIAL";
-        }
         else
-        {
             line.Status = "CLOSED";
-        }
 
         line.UpdatedAt = DateTime.UtcNow;
-        line.UpdatedBy = "SYSTEM";
+        line.UpdatedBy = userEmail;
 
         // ===============================
-        // ACTUALIZAR HEADER
+        // UPDATE HEADER
         // ===============================
-
         var header = await _context.ReceivingHeaders
             .Include(h => h.Lines)
-            .FirstOrDefaultAsync(h => h.Id == line.ReceivingHeaderId);
+            .FirstOrDefaultAsync(h =>
+                h.Id == line.ReceivingHeaderId &&
+                h.CompanyId == companyId);
 
         if (header != null)
         {
-            var totalReceived = header.Lines
-                .Sum(l =>
-                    (_context.PostedReceivingLines
-                        .Where(p => p.ReceivingLineId == l.Id)
-                        .Sum(p => (decimal?)p.QuantityReceived) ?? 0)
-                    + l.QuantityReceived
-                );
-
             var allClosed = header.Lines.All(l =>
             {
                 var posted = _context.PostedReceivingLines
-                    .Where(p => p.ReceivingLineId == l.Id)
+                    .Where(p =>
+                        p.ReceivingLineId == l.Id &&
+                        p.CompanyId == companyId)
                     .Sum(p => (decimal?)p.QuantityReceived) ?? 0;
 
                 return (posted + l.QuantityReceived) >= l.QuantityExpected;
             });
 
-            if (totalReceived == 0)
+            var anyProcessed = header.Lines.Any(l =>
             {
+                var posted = _context.PostedReceivingLines
+                    .Where(p =>
+                        p.ReceivingLineId == l.Id &&
+                        p.CompanyId == companyId)
+                    .Sum(p => (decimal?)p.QuantityReceived) ?? 0;
+
+                return (posted + l.QuantityReceived) > 0;
+            });
+
+            if (!anyProcessed)
                 header.Status = "OPEN";
-            }
             else if (allClosed)
-            {
                 header.Status = "CLOSED";
-            }
             else
-            {
                 header.Status = "RECEIVING";
-            }
 
             header.UpdatedAt = DateTime.UtcNow;
-            header.UpdatedBy = "SYSTEM";
+            header.UpdatedBy = userEmail;
         }
 
         await _context.SaveChangesAsync();

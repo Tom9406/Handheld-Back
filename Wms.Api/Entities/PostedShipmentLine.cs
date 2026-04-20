@@ -17,7 +17,7 @@
 
     public Guid WarehouseId { get; set; }
     public Guid? BinId { get; set; }
-    public string BinCode { get; set; }
+    public string BinCode { get; set; } = string.Empty;
 
     public decimal OrderedQty { get; set; }
     public decimal PickedQty { get; set; }

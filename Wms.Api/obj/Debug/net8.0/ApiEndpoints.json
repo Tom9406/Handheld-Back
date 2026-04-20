@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "Wms.Api.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Wms.Api.DTOs.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.AuthController",
+    "Method": "Test",
+    "RelativePath": "api/Auth/test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Wms.Api.Controllers.BinsController",
     "Method": "GetBins",
     "RelativePath": "api/bins",
@@ -145,9 +171,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Wms.Api.Controllers.Document_sequencesController",
+    "ContainingType": "Wms.Api.Controllers.DocumentSequencesController",
     "Method": "GetDocument",
-    "RelativePath": "api/document_sequence",
+    "RelativePath": "api/document-sequence",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -170,7 +196,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Wms.Api.Common.PagedResponse\u00601[[Wms.Api.Dtos.Item.ItemDto, Wms.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Wms.Api.Common.PagedResponse\u00601[[Wms.Api.DTOs.Document_sequencesDto, Wms.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -259,6 +285,11 @@
         "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
+      },
+      {
+        "Name": "companyId",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -293,7 +324,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -314,7 +345,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -345,7 +376,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -361,7 +392,7 @@
     "Parameters": [
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -432,7 +463,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -463,7 +494,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -484,7 +515,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -629,7 +660,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -722,7 +753,7 @@
       },
       {
         "Name": "companyId",
-        "Type": "System.Guid",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       }
     ],
@@ -747,11 +778,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "companyId",
-        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
         "Name": "PageNumber",
         "Type": "System.Int32",
         "IsRequired": false
@@ -773,6 +799,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.ReceivingHeadersController",
+    "Method": "CreateReceipt",
+    "RelativePath": "api/ReceivingHeaders",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Wms.Api.Dtos.ReceivingHeader.CreateReceivingHeaderDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Wms.Api.Controllers.ReceivingHeadersController",
@@ -802,7 +844,7 @@
   },
   {
     "ContainingType": "Wms.Api.Controllers.ReceivingHeadersController",
-    "Method": "PostShipment",
+    "Method": "PostReceipt",
     "RelativePath": "api/ReceivingHeaders/{id}/post",
     "HttpMethod": "POST",
     "IsController": true,
@@ -812,11 +854,6 @@
         "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
-      },
-      {
-        "Name": "companyId",
-        "Type": "System.Guid",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -829,11 +866,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "companyId",
-        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
       {
         "Name": "PageNumber",
         "Type": "System.Int32",
@@ -959,11 +991,6 @@
         "IsRequired": false
       },
       {
-        "Name": "companyId",
-        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
         "Name": "status",
         "Type": "System.String",
         "IsRequired": false
@@ -982,6 +1009,22 @@
         "Name": "sortDesc",
         "Type": "System.Boolean",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Wms.Api.Controllers.ShipmentHeadersController",
+    "Method": "CreateShipment",
+    "RelativePath": "api/shipmentheaders",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Wms.Api.Dtos.ShipmentHeader.CreateShipmentHeaderDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -1014,11 +1057,6 @@
         "Name": "id",
         "Type": "System.Guid",
         "IsRequired": true
-      },
-      {
-        "Name": "companyId",
-        "Type": "System.Guid",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1034,11 +1072,6 @@
       {
         "Name": "shipmentId",
         "Type": "System.Guid",
-        "IsRequired": false
-      },
-      {
-        "Name": "companyId",
-        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -1104,6 +1137,11 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "companyId",
+        "Type": "System.Nullable\u00601[[System.Guid, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
       {
         "Name": "PageNumber",
         "Type": "System.Int32",

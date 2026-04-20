@@ -15,8 +15,8 @@ namespace Wms.Api.Entities
         public bool IsActive { get; set; }
 
         public string ItemType { get; set; } = null!;
-        public string Part_No { get; set; } 
-        public string Alternative_Code { get; set; }
+        public string Part_No { get; set; } = string.Empty;
+        public string Alternative_Code { get; set; } = string.Empty;
 
         public string? Barcode { get; set; }
 
@@ -65,6 +65,6 @@ namespace Wms.Api.Entities
         // Navegación
         public Company Company { get; set; } = null!;
 
-        public ICollection<ItemImage> Images { get; set; }
+        public ICollection<ItemImage> Images { get; set; } = new List<ItemImage>();
     }
 }

@@ -1,4 +1,3 @@
-﻿using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Common;
@@ -7,9 +6,8 @@ using Wms.Api.DTOs;
 
 namespace Wms.Api.Controllers;
 
-[ApiController]
 [Route("api/stock")]
-public class StockController : ControllerBase
+public class StockController : BaseController
 {
     private readonly WmsDbContext _context;
 
@@ -18,18 +16,25 @@ public class StockController : ControllerBase
         _context = context;
     }
 
-    // ====================================================
-    // GET: api/stock?pageNumber=1&pageSize=20
-    // ====================================================
     [HttpGet]
     public async Task<ActionResult<PagedResponse<StockEnrichedDto>>> Get(
+        [FromQuery] Guid? companyId = null,
         [FromQuery] PaginationParameters? pagination = null)
     {
         pagination ??= new PaginationParameters();
+        var activeCompanyId = ResolveCompanyId(companyId);
 
-        var query = _context.CurrentStock
-            .AsNoTracking()
-            .AsQueryable();
+        var query =
+            from s in _context.CurrentStock.AsNoTracking()
+            join i in _context.Items.AsNoTracking() on s.ItemId equals i.Id
+            where i.CompanyId == activeCompanyId
+            select new StockEnrichedDto
+            {
+                CompanyId = i.CompanyId,
+                ItemId = s.ItemId,
+                BinId = s.BinId,
+                StockQty = s.StockQty
+            };
 
         var totalRecords = await query.CountAsync();
 
@@ -38,56 +43,39 @@ public class StockController : ControllerBase
             .ThenBy(s => s.BinId)
             .Skip((pagination.PageNumber - 1) * pagination.PageSize)
             .Take(pagination.PageSize)
-            .Select(s => new StockEnrichedDto
-            {
-                ItemId = s.ItemId,
-                BinId = s.BinId,
-                StockQty = s.StockQty
-            })
             .ToListAsync();
 
-        var response = new PagedResponse<StockEnrichedDto>
+        return Ok(new PagedResponse<StockEnrichedDto>
         {
             Data = stock,
             PageNumber = pagination.PageNumber,
             PageSize = pagination.PageSize,
             TotalRecords = totalRecords,
             TotalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize)
-        };
-
-        return Ok(response);
+        });
     }
 
-    // ====================================================
-    // GET: api/stock/enriched?companyId=GUID&pageNumber=1&pageSize=20
-    // ====================================================
     [HttpGet("enriched")]
     public async Task<ActionResult<PagedResponse<StockEnrichedDto>>> GetEnriched(
-    [FromQuery] Guid? companyId,
-    
-    [FromQuery] string? search,
-    [FromQuery] PaginationParameters? pagination = null
-    //[FromQuery] bool ItemIsActive = true
-        )
+        [FromQuery] Guid? companyId,
+        [FromQuery] string? search,
+        [FromQuery] PaginationParameters? pagination = null)
     {
         pagination ??= new PaginationParameters();
+        var activeCompanyId = ResolveCompanyId(companyId);
 
         var query =
-    from s in _context.CurrentStock.AsNoTracking()
-    join i in _context.Items.AsNoTracking() on s.ItemId equals i.Id
-    join b in _context.Bins.AsNoTracking() on s.BinId equals b.Id
-    where (!companyId.HasValue || i.CompanyId == companyId)
-
-   // && (!ItemIsActive || i.IsActive)
-    && (string.IsNullOrEmpty(search)
-        || i.ItemNo.Contains(search)
-        || i.Description.Contains(search)
-        || b.BinCode.Contains(search))
-
-    select new StockEnrichedDto
-    {
+            from s in _context.CurrentStock.AsNoTracking()
+            join i in _context.Items.AsNoTracking() on s.ItemId equals i.Id
+            join b in _context.Bins.AsNoTracking() on s.BinId equals b.Id
+            where i.CompanyId == activeCompanyId
+               && (string.IsNullOrEmpty(search)
+                   || i.ItemNo.Contains(search)
+                   || (i.Description != null && i.Description.Contains(search))
+                   || b.BinCode.Contains(search))
+            select new StockEnrichedDto
+            {
                 CompanyId = i.CompanyId,
-
                 ItemId = i.Id,
                 ItemNo = i.ItemNo,
                 ItemDescription = i.Description,
@@ -98,28 +86,22 @@ public class StockController : ControllerBase
                 IsLotTracked = i.IsLotTracked,
                 IsSerialTracked = i.IsSerialTracked,
                 IsExpirationTracked = i.IsExpirationTracked,
-
                 UnitWeight = i.UnitWeight,
                 UnitVolume = i.UnitVolume,
-
                 BinId = b.Id,
                 BinCode = b.BinCode,
                 BinDescription = b.Description,
                 BinType = b.BinType,
-
                 BinIsActive = b.IsActive,
                 IsBlocked = b.IsBlocked,
                 AllowPicking = b.AllowPicking,
                 AllowPutaway = b.AllowPutaway,
-
                 StockQty = s.StockQty,
-
-
                 ImageUrl = _context.ItemImages
-                .Where(img => img.ItemId == i.Id )
-                .Select(img => img.Url)
-                .FirstOrDefault()
-    };
+                    .Where(img => img.ItemId == i.Id)
+                    .Select(img => img.Url)
+                    .FirstOrDefault()
+            };
 
         var totalRecords = await query.CountAsync();
 
@@ -130,15 +112,13 @@ public class StockController : ControllerBase
             .Take(pagination.PageSize)
             .ToListAsync();
 
-        var response = new PagedResponse<StockEnrichedDto>
+        return Ok(new PagedResponse<StockEnrichedDto>
         {
             Data = result,
             PageNumber = pagination.PageNumber,
             PageSize = pagination.PageSize,
             TotalRecords = totalRecords,
             TotalPages = (int)Math.Ceiling(totalRecords / (double)pagination.PageSize)
-        };
-
-        return Ok(response);
+        });
     }
 }

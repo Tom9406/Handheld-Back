@@ -12,7 +12,7 @@
 
         public Guid ItemId { get; set; }
         public string ItemCode { get; set; } = null!;
-        public string ItemDescription { get; set; } = null!;
+        public string? ItemDescription { get; set; }
 
         public Guid? BinId { get; set; }
         public string? BinCode { get; set; }

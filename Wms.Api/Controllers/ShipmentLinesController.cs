@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Wms.Api.Data;
 using Wms.Api.Dtos.Shipments;
@@ -6,9 +6,8 @@ using Wms.Api.DTOs;
 
 namespace Wms.Api.Controllers;
 
-[ApiController]
 [Route("api/shipmentlines")]
-public class ShipmentLinesController : ControllerBase
+public class ShipmentLinesController : BaseController
 {
     private readonly WmsDbContext _db;
 
@@ -17,33 +16,26 @@ public class ShipmentLinesController : ControllerBase
         _db = db;
     }
 
-    // ======================================================
-    // GET: api/shipmentlines
-    //      ?shipmentId=GUID
-    //      &companyId=GUID
-    //      &status=Open
-    //      &pageNumber=1&pageSize=50
-    // ======================================================
     [HttpGet]
-    public async Task<IActionResult> GetShipmentLines( Guid shipmentId,Guid? companyId = null, string? status = null, int pageNumber = 1, int pageSize = 50)
+    public async Task<IActionResult> GetShipmentLines(
+        Guid shipmentId,
+        string? status = null,
+        int pageNumber = 1,
+        int pageSize = 50)
     {
+        var companyId = CompanyId;
+
+        if (shipmentId == Guid.Empty)
+            return BadRequest("ShipmentId is required.");
+
         if (pageNumber <= 0) pageNumber = 1;
         if (pageSize <= 0) pageSize = 50;
         if (pageSize > 200) pageSize = 200;
 
         var query = _db.ShipmentLines
             .AsNoTracking()
-            .Where(x => x.ShipmentId == shipmentId);
+            .Where(x => x.ShipmentId == shipmentId && x.CompanyId == companyId);
 
-        // ========================
-        // Multi-company filter
-        // ========================
-        if (companyId.HasValue)
-            query = query.Where(x => x.CompanyId == companyId);
-
-        // ========================
-        // Status filter
-        // ========================
         if (!string.IsNullOrWhiteSpace(status))
             query = query.Where(x => x.LineStatus == status);
 
@@ -68,7 +60,9 @@ public class ShipmentLinesController : ControllerBase
                 OrderedQty = x.OrderedQty,
                 PickedQty = x.PickedQty,
                 ShippedQty = x.ShippedQty,
-                AlreadyPostedQty = _db.PostedShipmentLines.Where(p => p.ShipmentLineId == x.Id).Sum(p => (decimal?)p.ShippedQty) ?? 0,
+                AlreadyPostedQty = _db.PostedShipmentLines
+                    .Where(p => p.ShipmentLineId == x.Id && p.CompanyId == companyId)
+                    .Sum(p => (decimal?)p.ShippedQty) ?? 0,
                 UnitOfMeasure = x.UnitOfMeasure,
                 BaseUomQty = x.BaseUomQty,
                 LotNo = x.LotNo,
@@ -82,27 +76,24 @@ public class ShipmentLinesController : ControllerBase
             })
             .ToListAsync();
 
-        var response = new
+        return Ok(new
         {
             pageNumber,
             pageSize,
             totalRecords,
             totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize),
             data
-        };
-
-        return Ok(response);
+        });
     }
 
-    // ======================================================
-    // GET: api/shipmentlines/{id}
-    // ======================================================
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
+        var companyId = CompanyId;
+
         var line = await _db.ShipmentLines
             .AsNoTracking()
-            .Where(x => x.Id == id)
+            .Where(x => x.Id == id && x.CompanyId == companyId)
             .Select(x => new ShipmentLineDto
             {
                 Id = x.Id,
@@ -118,7 +109,9 @@ public class ShipmentLinesController : ControllerBase
                 OrderedQty = x.OrderedQty,
                 PickedQty = x.PickedQty,
                 ShippedQty = x.ShippedQty,
-                AlreadyPostedQty = _db.PostedShipmentLines.Where(p => p.ShipmentLineId == x.Id).Sum(p => (decimal?)p.ShippedQty) ?? 0,
+                AlreadyPostedQty = _db.PostedShipmentLines
+                    .Where(p => p.ShipmentLineId == x.Id && p.CompanyId == companyId)
+                    .Sum(p => (decimal?)p.ShippedQty) ?? 0,
                 UnitOfMeasure = x.UnitOfMeasure,
                 BaseUomQty = x.BaseUomQty,
                 LotNo = x.LotNo,
@@ -141,75 +134,65 @@ public class ShipmentLinesController : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateLine(Guid id, UpdateShipmentLineDto dto)
     {
-        var alreadyPostedQty = await _db.PostedShipmentLines
-            .Where(x => x.ShipmentLineId == id)
-            .SumAsync(x => (decimal?)x.ShippedQty) ?? 0;
+        var companyId = CompanyId;
+        var userEmail = UserEmail;
+
+        if (dto.ShippedQty < 0)
+            return BadRequest("Invalid quantity.");
 
         var line = await _db.ShipmentLines
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id && x.CompanyId == companyId);
 
         if (line == null)
             return NotFound();
 
-        if (dto.ShippedQty < 0)
-            return BadRequest("Invalid quantity");
+        var alreadyPostedQty = await _db.PostedShipmentLines
+            .Where(x => x.ShipmentLineId == id && x.CompanyId == companyId)
+            .SumAsync(x => (decimal?)x.ShippedQty) ?? 0;
 
-        if (alreadyPostedQty + line.PickedQty + dto.ShippedQty > line.OrderedQty)
-            return BadRequest(
-    $"Shipped cannot exceed ordered quantity. Posted qty is: {alreadyPostedQty}");
+        if (alreadyPostedQty + dto.ShippedQty > line.OrderedQty)
+            return BadRequest($"Shipped cannot exceed ordered quantity. Posted qty is: {alreadyPostedQty}");
 
         line.ShippedQty = dto.ShippedQty;
 
-        var totalProcessed = line.PickedQty + line.ShippedQty;
-
+        var totalProcessed = alreadyPostedQty + line.ShippedQty;
         if (totalProcessed <= 0)
-        {
             line.LineStatus = "OPEN";
-        }
         else if (totalProcessed < line.OrderedQty)
-        {
             line.LineStatus = "PARTIAL";
-        }
         else
-        {
-            line.LineStatus = "CLOSED";
-        }
+            line.LineStatus = "READY_TO_POST";
 
         line.UpdatedAt = DateTime.UtcNow;
-        line.UpdatedBy = "SYSTEM";
-
-        // ===============================
-        // ACTUALIZAR HEADER
-        // ===============================
+        line.UpdatedBy = userEmail;
 
         var header = await _db.ShipmentHeaders
             .Include(h => h.Lines)
-            .FirstOrDefaultAsync(h => h.Id == line.ShipmentId);
+            .FirstOrDefaultAsync(h => h.Id == line.ShipmentId && h.CompanyId == companyId);
 
         if (header != null)
         {
-            var totalProcessedHeader = header.Lines
-                .Sum(l => l.PickedQty + l.ShippedQty);
+            var anyPrepared = header.Lines.Any(l => l.ShippedQty > 0 || l.PickedQty > 0);
+            var allReady = header.Lines.All(l => l.ShippedQty + (_db.PostedShipmentLines
+                .Where(x => x.ShipmentLineId == l.Id && x.CompanyId == companyId)
+                .Sum(x => (decimal?)x.ShippedQty) ?? 0) >= l.OrderedQty);
 
-            var allClosed = header.Lines
-                .All(l => (l.PickedQty + l.ShippedQty) >= l.OrderedQty);
+            var anyPosted = header.Lines.Any(l => (_db.PostedShipmentLines
+                .Where(x => x.ShipmentLineId == l.Id && x.CompanyId == companyId)
+                .Sum(x => (decimal?)x.ShippedQty) ?? 0) > 0);
 
-            if (totalProcessedHeader == 0)
-            {
+            if (!anyPrepared && !anyPosted)
                 header.ShipmentStatus = "OPEN";
-            }
-            else if (allClosed)
-            {
-                header.ShipmentStatus = "CLOSED";
-            }
+            else if (allReady)
+                header.ShipmentStatus = "READY_TO_POST";
             else
-            {
                 header.ShipmentStatus = "SHIPPING";
-            }
+
+            header.UpdatedAt = DateTime.UtcNow;
+            header.UpdatedBy = userEmail;
         }
 
         await _db.SaveChangesAsync();
-
         return NoContent();
     }
 }
